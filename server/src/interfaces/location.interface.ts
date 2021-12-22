@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import IComment from "./comment.interface";
 
 export type AuthorType = {
   id: string;
@@ -13,5 +14,5 @@ export default interface ILocation extends Document {
   description: string;
   createdAt: string;
   author: AuthorType;
-  comment: [string];
+  comment: [string | IComment];
 }
