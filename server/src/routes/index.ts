@@ -1,9 +1,12 @@
 import { Router } from "express";
 import authRoutes from "./user.route";
+import locationRoutes from "./location.routes";
 
 const router = Router();
 
 router.use("/auth", authRoutes);
+router.use("/location", locationRoutes);
+// router.use("/comment");
 
 /** Error handling */
 router.use((_, res, __) => {
