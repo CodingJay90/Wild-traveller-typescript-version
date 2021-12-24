@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
@@ -12,8 +13,16 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import { getSpecificUser } from "./redux/action-creators/auth.action";
+import { AuthState } from "./redux/reducers/authReducer";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSpecificUser("iii"));
+  }, []);
+  const state = useSelector((state: AuthState) => state);
+  console.log(state);
   return (
     <>
       <BrowserRouter>
