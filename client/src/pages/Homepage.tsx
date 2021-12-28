@@ -1,7 +1,6 @@
 import React from "react";
 import Home from "../components/home/Home";
-
-const Homepage = () => {
+const Homepage = (props: any) => {
   return (
     <section>
       <Home />

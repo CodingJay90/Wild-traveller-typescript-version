@@ -1,9 +1,13 @@
 export interface IUser {
-  username: string;
+  username?: string;
   email: string;
   password: string;
-  gender: string;
-  bio: string;
-  avatar: string;
-  token: string;
+  gender?: string;
+  bio?: string;
+  avatar?: string;
+  token?: string;
+}
+export interface AuthErrors {
+  success: boolean;
+  errorMessages: string[];
 }

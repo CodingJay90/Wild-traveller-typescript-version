@@ -59,7 +59,7 @@ const loginUser = async (req: Request, res: Response) => {
       });
     if (!foundUser) {
       console.log("User not found");
-      return res.json({
+      return res.status(400).json({
         success: false,
         errorMessages: createErrorResponse(
           "A user with the given email do not exist"
@@ -71,7 +71,7 @@ const loginUser = async (req: Request, res: Response) => {
       foundUser.password
     );
     if (!validatePassword) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         errorMessages: createErrorResponse(
           "Invalid Credentials. Password does not match"

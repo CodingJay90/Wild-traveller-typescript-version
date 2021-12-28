@@ -14,15 +14,9 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import { getSpecificUser } from "./redux/action-creators/auth.action";
-import { AuthState } from "./redux/reducers/authReducer";
+import { AuthState } from "./redux/reducers/auth.reducer";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getSpecificUser("iii"));
-  }, []);
-  const state = useSelector((state: AuthState) => state);
-  console.log(state);
   return (
     <>
       <BrowserRouter>

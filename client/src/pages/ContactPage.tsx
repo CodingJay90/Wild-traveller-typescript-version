@@ -5,7 +5,6 @@ const ContactPage = () => {
   return (
     <section>
       <Contact />
-      <Footer />
     </section>
   );
 };

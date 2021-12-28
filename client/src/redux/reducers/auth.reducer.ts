@@ -1,13 +1,13 @@
-import { IUser } from "../../utils/interface";
+import { AuthErrors, IUser } from "../../utils/interface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
 export interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
-  errMsg: string;
+  error: AuthErrors | null;
   currentUser: IUser | string;
-  success: boolean;
+  success: boolean | null;
   specificUser: IUser | null;
   isLoading: boolean;
 }
@@ -15,9 +15,9 @@ export interface AuthState {
 const initialState = {
   isAuthenticated: false,
   token: localStorage.getItem("token"),
-  errMsg: "",
+  error: null,
   currentUser: "",
-  success: false,
+  success: null,
   specificUser: null,
   isLoading: false,
 };
@@ -26,14 +26,15 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
   switch (action.type) {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
-      localStorage.setItem("auth_token", action.payload.token);
+      localStorage.setItem("auth_token", action.payload.token || "");
       return {
         ...state,
         isAuthenticated: true,
         token: action.payload.token,
-        errMsg: "",
-        success: null,
+        error: null,
+        success: true,
         currentUser: action.payload.username,
+        isLoading: false,
       };
     case ActionType.UPDATE_USER:
       return {
@@ -71,8 +72,9 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         ...state,
         isAuthenticated: null,
         token: null,
-        errMsg: action.payload,
+        error: action.payload,
         success: false,
+        isLoading: false,
       };
     case ActionType.USER_LOADED_FAIL:
       return {
@@ -81,15 +83,15 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         token: null,
       };
 
-    case ActionType.CLEAR_ERROR: {
+    case ActionType.CLEAR_ERROR:
       return {
         ...state,
         success: null,
-        errMsg: "",
+        error: null,
         currentUser: action.payload,
       };
-    }
-
+    case ActionType.RESET_AUTH_STATE:
+      return initialState;
     default:
       return state;
   }

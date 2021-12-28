@@ -7,7 +7,7 @@ interface RegisterAction {
 }
 interface RegisterActionFail {
   type: ActionType.REGISTER_USER_FAIL;
-  payload: object;
+  payload: IUser;
 }
 interface LoginAction {
   type: ActionType.LOGIN_USER;
@@ -15,7 +15,7 @@ interface LoginAction {
 }
 interface LoginActionFail {
   type: ActionType.LOGIN_USER_FAIL;
-  payload: object;
+  payload: IUser;
 }
 interface LoadUserAction {
   type: ActionType.USER_LOADED;
@@ -49,6 +49,10 @@ interface UserLoading {
   type: ActionType.USER_LOADING;
 }
 
+interface ResetAuthState {
+  type: ActionType.RESET_AUTH_STATE;
+}
+
 export type AuthAction =
   | LoginAction
   | LoadUserAction
@@ -60,4 +64,5 @@ export type AuthAction =
   | GetSpecificUser
   | DeleteUserAction
   | ClearError
-  | UserLoading;
+  | UserLoading
+  | ResetAuthState;

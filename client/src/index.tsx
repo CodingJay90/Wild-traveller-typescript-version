@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 
 import store from "./redux/store";
 

@@ -14,10 +14,16 @@ import { AuthAction } from "../actions-interface/auth.interface";
 export const registerUser =
   (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
     try {
-      const { data } = await registerUserApi("user/", userDetails);
+      console.log(userDetails);
+      dispatch({ type: ActionType.USER_LOADING });
+      const { data } = await registerUserApi("users/", userDetails);
       dispatch({ type: ActionType.REGISTER_USER, payload: data });
     } catch (error: any) {
-      dispatch({ type: ActionType.REGISTER_USER_FAIL, payload: error });
+      dispatch({ type: ActionType.USER_LOADING });
+      dispatch({
+        type: ActionType.REGISTER_USER_FAIL,
+        payload: error.response.data,
+      });
     }
   };
 
@@ -25,9 +31,14 @@ export const loginUser =
   (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await loginUserApi("sessions/", userDetails);
+      console.log(data);
       dispatch({ type: ActionType.LOGIN_USER, payload: data });
     } catch (error: any) {
-      dispatch({ type: ActionType.LOGIN_USER_FAIL, payload: error });
+      console.log(error.response.data);
+      dispatch({
+        type: ActionType.LOGIN_USER_FAIL,
+        payload: error.response.data,
+      });
     }
   };
 
@@ -73,4 +84,14 @@ export const clearError = () => (dispatch: Dispatch) => {
   dispatch({
     type: ActionType.CLEAR_ERROR,
   });
+};
+
+export const setLoading = () => {
+  return {
+    type: "USER_LOADING",
+  };
+};
+
+export const resetState = () => (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.RESET_AUTH_STATE });
 };
