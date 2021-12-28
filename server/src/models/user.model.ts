@@ -35,7 +35,7 @@ const UserSchema: Schema = new Schema(
 );
 
 UserSchema.post<IUser>("save", function () {
-  logging.info("Mongo", "New user info: ", this);
+  logging.info("Mongo", "New user created");
 });
 
 export default mongoose.model<IUser>("User", UserSchema);
