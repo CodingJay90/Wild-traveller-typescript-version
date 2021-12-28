@@ -6,6 +6,7 @@ import "./Register.css";
 import { toast } from "react-toastify";
 import Footer from "../../footer/Footer";
 import {
+  clearError,
   loginUser,
   registerUser,
   resetState,
@@ -44,11 +45,10 @@ const Auth = ({ type }: IProps) => {
   };
 
   useEffect(() => {
-    console.log(isLoading, "state");
-    if (error || isAuthenticated) {
+    if (error?.errorMessages.length || isAuthenticated) {
       setSpinnerLoader(isLoading);
-      dispatch(resetState());
-      console.log(error);
+      // dispatch(resetState());
+      console.log(error, "ss");
       error?.errorMessages.map((msg) => toastMessage(msg));
     }
     if (isAuthenticated) {
@@ -60,11 +60,11 @@ const Auth = ({ type }: IProps) => {
         navigate("/");
       }, 5000);
     }
-  }, [state]);
+  }, [state, error]);
 
   useEffect(() => {
     return () => {
-      dispatch(resetState());
+      dispatch(clearError());
     };
   }, []);
 

@@ -7,7 +7,7 @@ import {
   registerUserApi,
   updateUserApi,
 } from "../../api/auth.api";
-import { IUser } from "../../utils/interface";
+import { IUser } from "../../utils/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 

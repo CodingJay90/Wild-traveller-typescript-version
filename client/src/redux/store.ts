@@ -14,5 +14,5 @@ const store = createStore(
   reducers,
   compose(applyMiddleware(thunk), composeEnhancers())
 );
-
+export type AppDispatch = typeof store.dispatch;
 export default store;

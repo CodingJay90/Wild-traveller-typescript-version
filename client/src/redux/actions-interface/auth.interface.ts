@@ -1,21 +1,27 @@
-import { IUser } from "../../utils/interface";
+import { IUser } from "../../utils/authInterface";
 import { ActionType } from "../action-types/auth.types";
+
+interface AuthPayload extends IUser {
+  user: IUser;
+  token: string;
+  success: boolean;
+}
 
 interface RegisterAction {
   type: ActionType.REGISTER_USER;
-  payload: IUser;
+  payload: AuthPayload;
 }
 interface RegisterActionFail {
   type: ActionType.REGISTER_USER_FAIL;
-  payload: IUser;
+  payload: AuthPayload;
 }
 interface LoginAction {
   type: ActionType.LOGIN_USER;
-  payload: IUser;
+  payload: AuthPayload;
 }
 interface LoginActionFail {
   type: ActionType.LOGIN_USER_FAIL;
-  payload: IUser;
+  payload: AuthPayload;
 }
 interface LoadUserAction {
   type: ActionType.USER_LOADED;

@@ -1,4 +1,4 @@
-import { AuthErrors, IUser } from "../../utils/interface";
+import { AuthErrors, IUser } from "../../utils/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
@@ -6,7 +6,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
   error: AuthErrors | null;
-  currentUser: IUser | string;
+  currentUser: IUser | null;
   success: boolean | null;
   specificUser: IUser | null;
   isLoading: boolean;
@@ -14,9 +14,9 @@ export interface AuthState {
 
 const initialState = {
   isAuthenticated: false,
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem("auth_token"),
   error: null,
-  currentUser: "",
+  currentUser: null,
   success: null,
   specificUser: null,
   isLoading: false,
@@ -33,7 +33,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         token: action.payload.token,
         error: null,
         success: true,
-        currentUser: action.payload.username,
+        currentUser: action.payload.user,
         isLoading: false,
       };
     case ActionType.UPDATE_USER:
@@ -88,7 +88,6 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         ...state,
         success: null,
         error: null,
-        currentUser: action.payload,
       };
     case ActionType.RESET_AUTH_STATE:
       return initialState;

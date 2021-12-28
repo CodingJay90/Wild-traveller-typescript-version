@@ -1,7 +1,12 @@
 import React from "react";
+import Explore from "../components/explore/Explore";
 
 const ExplorePage = () => {
-  return <div></div>;
+  return (
+    <section>
+      <Explore />
+    </section>
+  );
 };
 
 export default ExplorePage;

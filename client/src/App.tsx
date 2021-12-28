@@ -13,10 +13,17 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import { getSpecificUser } from "./redux/action-creators/auth.action";
+import { getSpecificUser, loadUser } from "./redux/action-creators/auth.action";
+import { getLocations } from "./redux/action-creators/location.action";
 import { AuthState } from "./redux/reducers/auth.reducer";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser());
+    dispatch(getLocations());
+  }, [dispatch]);
+
   return (
     <>
       <BrowserRouter>

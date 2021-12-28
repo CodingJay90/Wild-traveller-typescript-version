@@ -7,42 +7,27 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
-// import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import hamburger from "../../img/hamburger.png";
-import { NavLink } from "react-router-dom";
+import { Store } from "../../redux/reducers";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const token = "";
-  const currentUser = {};
-  //   const token = useSelector((state) => state.auth.token);
-  //   const currentUser = useSelector((state) => state.auth.currentUser);
-  //   console.log(currentUser);
-  //   const history = useHistory();
-  //Toast message
-  //   const toastError = () =>
-  //     toast(`Logging you out ${currentUser.username}`, {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       className: "Toastify__toast--success",
-  //     });
+  const navigate = useNavigate();
+  const state = useSelector((state: Store) => state.auth);
+  const { token, currentUser } = state;
 
-  //   const logout = () => {
-  //     localStorage.removeItem("token");
-  //     toastError();
-  //     setTimeout(() => {
-  //       history.push("/");
-  //       window.location.reload();
-  //     }, 1500);
-  //   };
+  const logout = () => {
+    localStorage.removeItem("auth_token");
+    toast.success("Logging you out");
+    setTimeout(() => {
+      navigate("/");
+      window.location.reload();
+    }, 1500);
+  };
 
   return (
     <div className="Navbar">
@@ -86,23 +71,23 @@ const Navbar = () => {
             {currentUser && (
               <>
                 <li className="nav-item">
-                  {/* <NavLink to="/profile">{currentUser.username}</NavLink> */}
+                  <NavLink to="/profile">{currentUser.username}</NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="profile">
-                    {/* <img
+                    <img
                       src={
                         currentUser.avatar ||
                         "https://img2.pngio.com/default-avatar-port-perry-hospital-foundation-gravatar-png-1600_1600.png"
                       }
                       alt=""
-                    /> */}
+                    />
                   </NavLink>
                 </li>
 
-                {/* <li className="nav-item" onClick={logout}>
+                <li className="nav-item" onClick={logout}>
                   Log Out <FaSignOutAlt />
-                </li> */}
+                </li>
               </>
             )}
           </ul>
