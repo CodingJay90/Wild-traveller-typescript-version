@@ -29,6 +29,7 @@ const LocationDetails = () => {
   const [commentToggle, setCommentToggle] = useState(false);
   const [populateForm, setPopulateForm] = useState(false);
   const [comment_id, setCommentId] = useState<null | string>(null);
+  const [commentUpdateText, setCommentUpdateText] = useState<string>("");
   const currentUser = useSelector((state: Store) => state.auth.currentUser);
   const currentLocation = useSelector(
     (state: Store) => state.location.specificLocation
@@ -151,13 +152,8 @@ const LocationDetails = () => {
                               toggleArray[index] ? "comment-btn" : "none"
                             }
                             onClick={() => {
-                              setPopulateForm(!populateForm);
-                              dispatch(
-                                getSpecificComment(
-                                  currentLocation?._id,
-                                  data._id
-                                )
-                              );
+                              setPopulateForm(true);
+                              setCommentUpdateText(data.text);
                               setCommentId(data._id);
                             }}
                           >
@@ -171,7 +167,7 @@ const LocationDetails = () => {
                               dispatch(
                                 deleteComment(currentLocation?._id, data._id)
                               );
-                              window.location.reload();
+                              // window.location.reload();
                             }}
                           >
                             Delete
@@ -208,6 +204,8 @@ const LocationDetails = () => {
         populateForm={populateForm}
         comment_id={comment_id || ""}
         location_id={params.id || ""}
+        commentUpdateText={commentUpdateText}
+        setPopulateForm={setPopulateForm}
       />
     </div>
   );

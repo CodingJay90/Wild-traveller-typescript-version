@@ -8,6 +8,10 @@ export interface ICommentPayload {
   comment: IComment;
   comment_id?: string;
 }
+export interface DeleteCommentPayload {
+  location_id: string;
+  comment_id?: string;
+}
 //Locations
 interface GetAllLocationAction {
   type: LocationTypes.FETCH_LOCATION;
@@ -74,7 +78,7 @@ interface UpdateCommentAction {
 
 interface DeleteCommentAction {
   type: CommentTypes.DELETE_COMMENT;
-  payload: unknown;
+  payload: DeleteCommentPayload;
 }
 
 interface ThrowErrorAction {

@@ -82,12 +82,18 @@ const reducer = (
     case CommentTypes.DELETE_COMMENT:
       return {
         ...state,
-        location: [
-          ...state.location,
-          state.location.map((item) =>
-            item.comment.filter((item) => item._id !== action.payload)
+        // location: [
+        //   ...state.location,
+        //   state.location.map((item) =>
+        //     item.comment.filter((item) => item._id !== action.payload)
+        //   ),
+        // ],
+        specificLocation: {
+          ...state.specificLocation,
+          comment: state.specificLocation?.comment.filter(
+            (item) => item._id !== action.payload.comment_id
           ),
-        ],
+        },
       };
     case CommentTypes.UPDATE_COMMENT:
       const updatedComment = state.specificLocation?.comment.map((i) =>

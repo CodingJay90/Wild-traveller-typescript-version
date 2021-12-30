@@ -13,6 +13,7 @@ import {
 import { ILocation, ILocationForm } from "../../utils/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 import {
+  DeleteCommentPayload,
   ICommentPayload,
   LocationAction,
 } from "../actions-interface/location.interface";
@@ -177,9 +178,14 @@ export const deleteComment =
   async (dispatch: Dispatch<LocationAction>) => {
     try {
       const { data } = await deleteCommentApi(`/${id}/comment/${commentId}`);
+      const payload: DeleteCommentPayload = {
+        location_id: id,
+        comment_id: commentId,
+      };
+      console.log(data);
       dispatch({
         type: CommentTypes.DELETE_COMMENT,
-        payload: data,
+        payload,
       });
     } catch (error) {
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });
