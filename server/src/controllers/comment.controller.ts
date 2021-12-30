@@ -12,7 +12,6 @@ const createComment = async (req: AuthRequest, res: Response) => {
       _id: req.params.id,
     })) as ILocation;
     const comment = (await Comment.create(req.body)) as IComment;
-    console.log(req.body);
     const user = (await User.findById(req.user?._id)) as IUser;
     comment.author.id = user?._id;
     comment.author.username = req.user?.username;
@@ -20,10 +19,9 @@ const createComment = async (req: AuthRequest, res: Response) => {
     await comment.save();
     foundLocation.comment.push(comment);
     await foundLocation.save();
-    res.status(200).json({ success: true, comment, user });
+    res.status(200).json({ success: true, comment });
   } catch (err: any) {
     res.status(400).json(err.message);
-    console.log(err);
   }
 };
 

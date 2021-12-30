@@ -12,7 +12,10 @@ import {
 } from "../../api/location.api";
 import { ILocation, ILocationForm } from "../../utils/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
-import { LocationAction } from "../actions-interface/location.interface";
+import {
+  ICommentPayload,
+  LocationAction,
+} from "../actions-interface/location.interface";
 
 export const getLocations =
   () => async (dispatch: Dispatch<LocationAction>) => {
@@ -115,7 +118,6 @@ export const getSpecificComment =
       const { data } = await getSpecificCommentApi(
         `/${id}/comment/${comment_id}`
       );
-      console.log(data, "object");
       dispatch({
         type: CommentTypes.FETCH_SPECIFIC_COMMENT,
         payload: data.foundComment,
@@ -133,9 +135,14 @@ export const createComment =
         `/${id}/comment/create`,
         commentText
       );
+      console.log(data);
+      const payload: ICommentPayload = {
+        comment: data.comment,
+        location_id: id,
+      };
       dispatch({
         type: CommentTypes.ADD_COMMENT,
-        payload: data,
+        payload,
       });
     } catch (error) {
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });
@@ -150,10 +157,15 @@ export const updateComment =
         `/${id}/comment/${comment_id}`,
         commentText
       );
-      console.log(commentText);
+      const payload: ICommentPayload = {
+        comment: data.updatedComment,
+        location_id: id,
+        comment_id,
+      };
+      console.log(data);
       dispatch({
-        type: CommentTypes.ADD_COMMENT,
-        payload: data,
+        type: CommentTypes.UPDATE_COMMENT,
+        payload: payload,
       });
     } catch (error) {
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });

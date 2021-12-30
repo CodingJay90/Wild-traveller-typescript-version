@@ -98,7 +98,7 @@ const LocationDetails = () => {
       <h2>Comments</h2>
       <hr className="sep-2" />
 
-      {currentLocation?.comment ? (
+      {!isLoading && currentLocation?.comment ? (
         currentLocation?.comment.map((data) => {
           return (
             <div className="comment-container" key={data._id}>
