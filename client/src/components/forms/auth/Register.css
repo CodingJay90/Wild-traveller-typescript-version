@@ -1,0 +1,69 @@
+.Signup .container {
+  width: 50%;
+  margin: 10rem auto;
+  background: #f1f1f1;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.438),
+    -2px -3px 5px rgba(0, 0, 0, 0.363);
+}
+
+.Signup h1 {
+  font-weight: 300;
+  font-size: 2.4em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.Signup label,
+p {
+  display: block;
+  font-size: 1.5em;
+  margin: 0.5rem;
+}
+
+.Signup input {
+  padding: 1rem;
+  margin: 0.5rem;
+  border: none;
+  width: 95%;
+  border-bottom: 1px solid rgb(150, 12, 115);
+  background: transparent;
+}
+
+.Signup textarea {
+  width: 90%;
+  margin-left: 10px;
+}
+
+.Signup button {
+  width: 90%;
+  margin: 15px auto;
+  display: block;
+}
+
+.Signup p {
+  font-size: 1.2em;
+  margin-top: 2.3rem;
+}
+
+.Signup p span {
+  font-size: 17px;
+}
+
+.Signup p span:hover {
+  text-decoration: underline;
+}
+
+.Signup .gender {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Signup .gender label {
+  font-size: 17px;
+}
+
+.Signup .gender input[type="radio"] {
+  display: inline;
+}

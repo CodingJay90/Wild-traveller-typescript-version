@@ -42,8 +42,7 @@ const updateComment = async (req: Request, res: Response) => {
     const updatedComment = await Comment.findByIdAndUpdate(
       req.params.comment_id,
       req.body,
-      { new: false, useFindAndModify: false },
-      () => {}
+      { new: true, useFindAndModify: false }
     );
     res.status(200).json({ success: true, updatedComment });
   } catch (error: any) {

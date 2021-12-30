@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import { generateToken } from "../utils/signToken";
 import IUser, { AuthRequest } from "../interfaces/user.interface";
+
+function createErrorResponse(...msg: any): string[] {
+  return msg;
+}
 
 const createUser = async (req: Request, res: Response) => {
   const { email, username, avatar, password, bio, gender } = req.body;
@@ -16,7 +19,12 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ success: false, errors: errors.array() });
+      const err: string[] = [];
+      errors.array().map((i) => err.push(i.msg));
+      return res.status(400).json({
+        success: false,
+        errorMessages: err,
+      });
     }
 
     const newUser = await User.create({
@@ -31,26 +39,31 @@ const createUser = async (req: Request, res: Response) => {
     res.header("Authorization", token);
     res.status(200).json({ success: true, user: newUser, token });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       error,
     });
   }
 };
 
+function aaa(...args: any) {
+  return args;
+}
 const loginUser = async (req: Request, res: Response) => {
   try {
+    console.log(aaa("jj", "jkjj"));
     const foundUser = await User.findOne({ email: req.body.email });
     if (req.body.email === "")
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "Email field cannot be empty",
+        errorMessages: createErrorResponse("Email field cannot be empty"),
       });
     if (!foundUser) {
       console.log("User not found");
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "A user with the given email do not exist",
+        errorMessages: createErrorResponse(
+          "A user with the given email do not exist"
+        ),
       });
     }
     const validatePassword = await bcrypt.compare(
@@ -58,9 +71,11 @@ const loginUser = async (req: Request, res: Response) => {
       foundUser.password
     );
     if (!validatePassword) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: "Invalid Credentials. Password does not match",
+        errorMessages: createErrorResponse(
+          "Invalid Credentials. Password does not match"
+        ),
       });
     }
     const token = generateToken(foundUser);

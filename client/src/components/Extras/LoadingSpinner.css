@@ -1,0 +1,25 @@
+.overlay {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0000009d;
+  z-index: 2;
+}
+
+.overlay .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+}
+
+.overlay .container {
+  color: #fff;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
