@@ -26,10 +26,6 @@ const Explore = () => {
   useEffect(() => {
     console.log(location);
   }, [state]);
-  //   const data = useSelector((state) => state.location.location);
-  //   const isLoading = useSelector((state) => state.location.isLoading);
-  //   const token = useSelector((state) => state.auth.token);
-  //   const [location, setLocation] = useState([]);
   const [query, setQuery] = useState("");
   //   console.log(location.length);
 
@@ -115,13 +111,13 @@ const Explore = () => {
           <FaSpinner size={50} className="App-logo-spin App-logo" />
         </div>
       )}
-      {/* <Pagination
+      <Pagination
         postsPerPage={postsPerPage}
         totalPosts={location.length}
         paginate={paginate}
         currentPage={currentPage}
       />
-       */}
+
       <Footer />
     </div>
   );

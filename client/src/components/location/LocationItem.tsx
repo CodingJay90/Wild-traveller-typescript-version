@@ -11,7 +11,6 @@ export interface LocationProps {
 
 const LocationItem: FC<LocationProps> = ({ item }) => {
   const { location, image, description, _id } = item;
-  console.log(image);
   return (
     <div className="LocationItem">
       <div className="container">

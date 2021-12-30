@@ -12,7 +12,7 @@ import LocationDetailsPage from "./pages/LocationDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
-import UserProfilePage from "./pages/UserProfilePage";
+import UserProfilePage from "./pages/Dashboard";
 import { getSpecificUser, loadUser } from "./redux/action-creators/auth.action";
 import { getLocations } from "./redux/action-creators/location.action";
 import { AuthState } from "./redux/reducers/auth.reducer";
@@ -36,12 +36,12 @@ function App() {
             element={<LocationDetailsPage />}
           />
           <Route path="/create" element={<CreateLocationPage />} />
-          <Route path="/edit" element={<EditLocationPage />} />
+          <Route path="/edit/:id" element={<EditLocationPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/userProfile/:id" element={<UserProfilePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/userProfile/:id" element={<ProfilePage />} />
+          <Route path="/dashboard" element={<UserProfilePage />} />
         </Routes>
       </BrowserRouter>
     </>

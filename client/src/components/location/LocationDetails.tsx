@@ -44,6 +44,9 @@ const LocationDetails = () => {
 
   useEffect(() => {
     dispatch(getSpecificLocation(params.id || ""));
+    if (currentUser?._id == currentLocation?.author.id) {
+      console.log("show the bitch");
+    }
   }, [dispatch, params.id]);
 
   if (error) {
@@ -56,30 +59,30 @@ const LocationDetails = () => {
       <div className="container">
         <div className="img-container">
           <img src={currentLocation?.image} alt="" />
-          {currentUser && currentLocation?._id === currentLocation?.author.id && (
+          {currentUser && currentUser?._id == currentLocation?.author.id && (
             <span className="btn-controller">
               <FaCaretDown size={52} onClick={() => setToggle(!toggle)} />{" "}
             </span>
           )}
 
-          {currentUser && currentUser._id === currentLocation?.author.id ? (
+          {currentUser && currentUser?._id === currentLocation?.author.id ? (
             <span className="options">
               {toggle && (
                 <span className="button">
                   <Link
-                    to="/edit"
+                    to={`/edit/${currentLocation?._id}`}
                     state={locationProp}
                     className={toggle ? "btn btn-default" : "none"}
                   >
                     Edit
                   </Link>
-                  <Link
+                  <button
                     className={toggle ? "btn btn-danger" : "none"}
                     onClick={() => onDeleteLocation(currentLocation?._id || "")}
-                    to="#"
+                    // to="#"
                   >
                     Delete
-                  </Link>
+                  </button>
                 </span>
               )}
             </span>

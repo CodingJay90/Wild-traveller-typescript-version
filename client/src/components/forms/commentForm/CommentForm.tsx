@@ -27,7 +27,6 @@ const CreateCommentForm: FC<IProps> = ({
   const specificComment = useSelector(
     (state: Store) => state.location.specificComment
   );
-  console.log(specificComment);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

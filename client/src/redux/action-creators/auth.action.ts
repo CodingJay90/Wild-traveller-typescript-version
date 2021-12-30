@@ -7,7 +7,7 @@ import {
   registerUserApi,
   updateUserApi,
 } from "../../api/auth.api";
-import { IUser } from "../../utils/authInterface";
+import { IUser, IUserForm } from "../../utils/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
@@ -43,9 +43,9 @@ export const loginUser =
   };
 
 export const updateUser =
-  (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
+  (userDetails: IUserForm) => async (dispatch: Dispatch<AuthAction>) => {
     try {
-      const { data } = await updateUserApi("update/", userDetails);
+      const { data } = await updateUserApi("/user/update/", userDetails);
       dispatch({ type: ActionType.UPDATE_USER, payload: data });
     } catch (error: any) {
       console.log(error);
@@ -74,8 +74,10 @@ export const getSpecificUser =
   (id: string) => async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await getSpecificUserApi(`sessions/${id}`);
-      dispatch({ type: ActionType.USER_LOADED, payload: data });
+      console.log(data);
+      dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: data.foundUser });
     } catch (error: any) {
+      console.log(error.response);
       dispatch({ type: ActionType.USER_LOADED_FAIL, payload: error });
     }
   };

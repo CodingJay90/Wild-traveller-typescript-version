@@ -44,6 +44,7 @@ const reducer = (
         ...state,
         location: [...state.location, action.payload],
         error: null,
+        isLoading: false,
       };
     case LocationTypes.UPDATE_LOCATION:
       return {
@@ -51,6 +52,7 @@ const reducer = (
         location: state.location.map((item) =>
           item._id === action.payload._id ? action.payload : item
         ),
+        isLoading: false,
       };
     case LocationTypes.DELETE_LOCATION:
       return {

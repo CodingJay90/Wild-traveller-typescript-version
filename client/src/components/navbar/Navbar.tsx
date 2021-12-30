@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const logout = () => {
     localStorage.removeItem("auth_token");
-    toast.success("Logging you out");
+    toast.success("Logging you out", { theme: "dark" });
     setTimeout(() => {
       navigate("/");
       window.location.reload();
@@ -71,10 +71,10 @@ const Navbar = () => {
             {currentUser && (
               <>
                 <li className="nav-item">
-                  <NavLink to="/profile">{currentUser.username}</NavLink>
+                  <NavLink to="/dashboard">{currentUser.username}</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="profile">
+                  <NavLink to="/dashboard">
                     <img
                       src={
                         currentUser.avatar ||
@@ -93,7 +93,7 @@ const Navbar = () => {
           </ul>
         )}
 
-        <ToastContainer
+        {/* <ToastContainer
           position="top-right"
           autoClose={5000}
           hideProgressBar={false}
@@ -104,7 +104,7 @@ const Navbar = () => {
           draggable
           bodyClassName="white"
           progressClassName="Toastify__progress-bar--dark"
-        />
+        /> */}
       </nav>
     </div>
   );

@@ -12,6 +12,12 @@ export interface ILocation {
   comment: [IComment];
 }
 
+export interface ILocationForm {
+  location: string;
+  image: string;
+  description: string;
+}
+
 export interface IComment {
   author: {
     id: string;

@@ -10,7 +10,7 @@ import {
   updateCommentApi,
   updateLocationApi,
 } from "../../api/location.api";
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation, ILocationForm } from "../../utils/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 import { LocationAction } from "../actions-interface/location.interface";
 
@@ -42,7 +42,7 @@ export const getSpecificLocation =
   };
 
 export const addLocation =
-  (locationDetails: ILocation) =>
+  (locationDetails: ILocationForm) =>
   async (dispatch: Dispatch<LocationAction>) => {
     try {
       const { data } = await addLocationApi("/create", locationDetails);
@@ -59,7 +59,7 @@ export const addLocation =
   };
 
 export const updateLocation =
-  (id: string, locationDetails: ILocation) =>
+  (id: string, locationDetails: ILocationForm) =>
   async (dispatch: Dispatch<LocationAction>) => {
     try {
       const { data } = await updateLocationApi(
@@ -82,9 +82,6 @@ export const deleteLocation =
   (id: string) => async (dispatch: Dispatch<LocationAction>) => {
     try {
       const { data } = await deleteLocationApi(`/delete/${id}`);
-      dispatch({
-        type: LocationTypes.FETCH_LOADING,
-      });
       dispatch({
         type: LocationTypes.DELETE_LOCATION,
         payload: data,
