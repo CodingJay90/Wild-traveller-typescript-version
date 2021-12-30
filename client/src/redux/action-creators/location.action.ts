@@ -36,6 +36,7 @@ export const getSpecificLocation =
       });
       dispatch({ type: LocationTypes.FETCH_SPECIFIC_LOCATION, payload: data });
     } catch (error) {
+      console.log(error);
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });
     }
   };
@@ -117,7 +118,11 @@ export const getSpecificComment =
       const { data } = await getSpecificCommentApi(
         `/${id}/comment/${comment_id}`
       );
-      dispatch({ type: CommentTypes.FETCH_SPECIFIC_COMMENT, payload: data });
+      console.log(data, "object");
+      dispatch({
+        type: CommentTypes.FETCH_SPECIFIC_COMMENT,
+        payload: data.foundComment,
+      });
     } catch (error) {
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });
     }
@@ -148,6 +153,7 @@ export const updateComment =
         `/${id}/comment/${comment_id}`,
         commentText
       );
+      console.log(commentText);
       dispatch({
         type: CommentTypes.ADD_COMMENT,
         payload: data,

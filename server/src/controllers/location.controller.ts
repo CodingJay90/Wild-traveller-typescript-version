@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/user.model";
 import Location from "../models/location.model";
 import { AuthRequest } from "../interfaces/user.interface";
 
@@ -9,7 +8,7 @@ const getLocations = async (req: Request, res: Response) => {
 
     res.status(200).json(foundLocation);
   } catch (error: any) {
-    res.json({ success: false, message: error.message });
+    res.status(404).json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -41,7 +40,7 @@ const getSpecificLocation = async (req: Request, res: Response) => {
     );
     res.status(200).json(foundLoaction);
   } catch (error: any) {
-    res.json({ success: false, message: error.message });
+    res.status(404).json({ success: false, message: error.message });
     console.log(error);
   }
 };

@@ -6,6 +6,7 @@ export interface IUser {
   bio?: string;
   avatar?: string;
   token?: string;
+  _id?: string;
 }
 export interface AuthErrors {
   success: boolean;

@@ -1,5 +1,5 @@
 import { AuthErrors, IUser } from "../../utils/authInterface";
-import { ILocation } from "../../utils/LocationInterface";
+import { IComment, ILocation } from "../../utils/LocationInterface";
 import { ActionType } from "../action-types/auth.types";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 import { AuthAction } from "../actions-interface/auth.interface";
@@ -9,16 +9,16 @@ export interface LocationState {
   location: ILocation[];
   isLoading: boolean;
   error: string | null;
-  specificLocation: ILocation[];
-  specificComment: ILocation[];
+  specificLocation: ILocation | null;
+  specificComment: IComment;
 }
 
 const initialState = {
   location: [],
   isLoading: false,
   error: null,
-  specificLocation: [],
-  specificComment: [],
+  specificLocation: null,
+  specificComment: {} as IComment,
 };
 
 const reducer = (
@@ -36,6 +36,7 @@ const reducer = (
     case LocationTypes.FETCH_SPECIFIC_LOCATION:
       return {
         ...state,
+        isLoading: false,
         specificLocation: action.payload,
       };
     case LocationTypes.ADD_LOCATION:
