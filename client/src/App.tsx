@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -16,6 +16,7 @@ import UserProfilePage from "./pages/Dashboard";
 import { getSpecificUser, loadUser } from "./redux/action-creators/auth.action";
 import { getLocations } from "./redux/action-creators/location.action";
 import { AuthState } from "./redux/reducers/auth.reducer";
+import FreakingComponent from "./FreakingComponent";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
           <Route path="/dashboard" element={<UserProfilePage />} />
         </Routes>
       </BrowserRouter>
+      {/* <FreakingComponent /> */}
     </>
   );
 }
