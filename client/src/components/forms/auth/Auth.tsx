@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import FileBase64 from "react-file-base64";
 import "./Register.css";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Footer from "../../footer/Footer";
 import {
   clearError,
@@ -32,30 +32,21 @@ const Auth = ({ type }: IProps) => {
     avatar: "",
   });
   const navigate = useNavigate();
-  const toastMessage = (msg: string): void => {
-    toast.info(msg, {
-      position: "top-right",
-      autoClose: 7000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   useEffect(() => {
     if (error?.errorMessages.length || isAuthenticated) {
       setSpinnerLoader(isLoading);
       // dispatch(resetState());
       console.log(error, "ss");
-      error?.errorMessages.map((msg) => toastMessage(msg));
+      error?.errorMessages.map((msg) => toast.error(msg, { theme: "dark" }));
     }
     if (isAuthenticated) {
       setSpinnerLoader(isLoading);
-      toastMessage(
-        type === "signup" ? "SignUp successful" : "Login successful"
+      toast.success(
+        type === "signup" ? "SignUp successful" : "Login successful",
+        { theme: "dark" }
       );
+
       setTimeout(() => {
         navigate("/");
       }, 5000);
@@ -170,6 +161,7 @@ const Auth = ({ type }: IProps) => {
         loading={spinnerLoader}
         loadingText="Signing up. Please wait...."
       />
+      <ToastContainer />
     </React.Fragment>
   );
 };

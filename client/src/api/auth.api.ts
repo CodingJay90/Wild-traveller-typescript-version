@@ -3,7 +3,7 @@ const token = localStorage.getItem("auth_token");
 
 const authClient = axios.create({
   baseURL: "http://localhost:5000/api/v2/auth/",
-  timeout: 1000,
+  timeout: 0,
   headers: {
     Accept: "application/vnd.GitHub.v3+json",
     Authorization: token || "",

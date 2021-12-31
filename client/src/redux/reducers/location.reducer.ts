@@ -68,34 +68,43 @@ const reducer = (
         specificComment: action.payload,
       };
     case CommentTypes.ADD_COMMENT:
+      const foundLocation = state.location.find(
+        (i) => i._id === action.payload.location_id
+      );
+      foundLocation?.comment.push(action.payload.comment);
       return {
         ...state,
-        location: [
-          ...state.location,
-          state.location.map((item) => item.comment.push(action.payload)),
-        ],
+        location: state.location.map((item) =>
+          item._id === action.payload.location_id ? foundLocation : item
+        ),
+        specificLocation: foundLocation,
       };
     case CommentTypes.DELETE_COMMENT:
       return {
         ...state,
-        location: [
-          ...state.location,
-          state.location.map((item) =>
-            item.comment.filter((item) => item._id !== action.payload)
+        // location: [
+        //   ...state.location,
+        //   state.location.map((item) =>
+        //     item.comment.filter((item) => item._id !== action.payload)
+        //   ),
+        // ],
+        specificLocation: {
+          ...state.specificLocation,
+          comment: state.specificLocation?.comment.filter(
+            (item) => item._id !== action.payload.comment_id
           ),
-        ],
+        },
       };
     case CommentTypes.UPDATE_COMMENT:
+      const updatedComment = state.specificLocation?.comment.map((i) =>
+        i._id === action.payload.comment_id ? action.payload.comment : i
+      );
       return {
         ...state,
-        location: [
-          ...state.location,
-          state.location.map((item) =>
-            item.comment.map((i) =>
-              i._id !== action.payload._id ? action.payload : item
-            )
-          ),
-        ],
+        specificLocation: {
+          ...state.specificLocation,
+          comment: updatedComment,
+        },
       };
     //MISC
     case LocationTypes.FETCH_LOADING:

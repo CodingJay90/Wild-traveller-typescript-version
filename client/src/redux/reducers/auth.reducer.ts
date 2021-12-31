@@ -80,7 +80,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       return {
         ...state,
         isAuthenticated: null,
-        error: action.payload,
+        // error: action.payload,
       };
 
     case ActionType.CLEAR_ERROR:
