@@ -20,8 +20,9 @@ import FreakingComponent from "./FreakingComponent";
 
 function App() {
   const dispatch = useDispatch();
+  const authToken = localStorage.getItem("auth_token");
   useEffect(() => {
-    dispatch(loadUser());
+    if (authToken) dispatch(loadUser());
     dispatch(getLocations());
   }, [dispatch]);
 

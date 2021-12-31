@@ -46,7 +46,7 @@ export const updateUser =
   (userDetails: IUserForm) => async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await updateUserApi("/user/update/", userDetails);
-      dispatch({ type: ActionType.UPDATE_USER, payload: data });
+      dispatch({ type: ActionType.UPDATE_USER, payload: data.updatedUser });
     } catch (error: any) {
       console.log(error);
     }
