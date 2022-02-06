@@ -39,8 +39,4 @@ const LocationSchema: Schema = new Schema(
   }
 );
 
-LocationSchema.post<ILocation>("save", function () {
-  logging.info("Mongo", "New location info: ", this);
-});
-
 export default mongoose.model<ILocation>("Location", LocationSchema);

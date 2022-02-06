@@ -1,8 +1,20 @@
-import { IUser } from "../../utils/authInterface";
-import { IComment, ILocation } from "../../utils/LocationInterface";
+// import { IUser } from "../../utils/authInterface";
+import {
+  IComment,
+  ILocation,
+} from "../../services/utils/interfaces/LocationInterface";
 import { ActionType } from "../action-types/auth.types";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 
+export interface ICommentPayload {
+  location_id: string;
+  comment: IComment;
+  comment_id?: string;
+}
+export interface DeleteCommentPayload {
+  location_id: string;
+  comment_id?: string;
+}
 //Locations
 interface GetAllLocationAction {
   type: LocationTypes.FETCH_LOCATION;
@@ -59,17 +71,17 @@ interface GetCommentAuthorAction {
 
 interface AddCommentAction {
   type: CommentTypes.ADD_COMMENT;
-  payload: IComment;
+  payload: ICommentPayload;
 }
 
 interface UpdateCommentAction {
   type: CommentTypes.UPDATE_COMMENT;
-  payload: IComment;
+  payload: ICommentPayload;
 }
 
 interface DeleteCommentAction {
   type: CommentTypes.DELETE_COMMENT;
-  payload: unknown;
+  payload: DeleteCommentPayload;
 }
 
 interface ThrowErrorAction {

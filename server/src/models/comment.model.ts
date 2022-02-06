@@ -25,8 +25,4 @@ const CommentSchema: Schema = new Schema(
   }
 );
 
-CommentSchema.post<IComment>("save", function () {
-  logging.info("Mongo", "New Comment info: ", this);
-});
-
 export default mongoose.model<IComment>("Comment", CommentSchema);

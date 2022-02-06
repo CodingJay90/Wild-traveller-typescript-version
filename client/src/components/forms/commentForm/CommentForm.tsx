@@ -6,13 +6,14 @@ import {
   updateComment,
 } from "../../../redux/action-creators/location.action";
 import { Store } from "../../../redux/reducers";
-import { ILocation } from "../../../utils/LocationInterface";
+import { ILocation } from "../../../services/utils/interfaces/LocationInterface";
 
 interface IProps {
-  //   item: ILocation;
+  setPopulateForm(val: boolean): void;
   populateForm: boolean;
   comment_id: string;
   location_id: string;
+  commentUpdateText: string;
 }
 
 const CreateCommentForm: FC<IProps> = ({
@@ -20,34 +21,49 @@ const CreateCommentForm: FC<IProps> = ({
   populateForm,
   comment_id,
   location_id,
+  commentUpdateText,
+  setPopulateForm,
 }) => {
-  const [text, setText] = useState("");
-  const [updateText, setUpdateText] = useState("");
+  const [text, setText] = useState(commentUpdateText);
   const dispatch = useDispatch();
-  const specificComment = useSelector(
-    (state: Store) => state.location.specificComment
-  );
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createComment(location_id, { text }));
-    // window.location.reload();
+    if (populateForm) {
+      dispatch(updateComment(location_id, comment_id, { text }));
+    } else dispatch(createComment(location_id, { text }));
+
+    setText("");
+    setPopulateForm(false);
   };
 
   const onUpdate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateComment(location_id, comment_id, { text: updateText }));
-    // window.location.reload();
+    dispatch(updateComment(location_id, comment_id, { text: text }));
+    setText("");
   };
 
   useEffect(() => {
-    if (comment_id) dispatch(getSpecificComment(location_id, comment_id));
-    if (populateForm) setUpdateText(specificComment.text);
+    // if (comment_id) dispatch(getSpecificComment(location_id, comment_id));
+    // if (populateForm) setUpdateText(specificComment.text);
+    if (populateForm) setText(commentUpdateText);
   }, [populateForm, location_id, comment_id]);
 
   return (
     <div className="comment-input">
-      {!populateForm ? (
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+          placeholder="Add comment"
+        />
+        <button disabled={!text} className="btn btn-warning">
+          {populateForm ? "Update Comment" : "Enter"}
+        </button>
+      </form>
+
+      {/* {!populateForm ? (
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -67,7 +83,7 @@ const CreateCommentForm: FC<IProps> = ({
           />
           <button className="btn btn-warning">Update Comment</button>
         </form>
-      )}
+      )} */}
     </div>
   );
 };

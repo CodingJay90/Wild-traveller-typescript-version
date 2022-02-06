@@ -1,0 +1,17 @@
+@import "./variables";
+
+@mixin dektopBreakpoint {
+  @media only screen and (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin tabletBreakpoint {
+  @media only screen and (min-width: 768px) {
+    @content;
+  }
+}
+@mixin mobileBreakpoint {
+  @media only screen and (min-width: 380px) {
+    @content;
+  }
+}

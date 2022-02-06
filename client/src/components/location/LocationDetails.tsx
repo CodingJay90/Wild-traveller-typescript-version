@@ -13,7 +13,7 @@ import {
   getSpecificComment,
   getSpecificLocation,
 } from "../../redux/action-creators/location.action";
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 import NoContent from "../Extras/NoContent";
 import CreateCommentForm from "../forms/commentForm/CommentForm";
 
@@ -29,6 +29,7 @@ const LocationDetails = () => {
   const [commentToggle, setCommentToggle] = useState(false);
   const [populateForm, setPopulateForm] = useState(false);
   const [comment_id, setCommentId] = useState<null | string>(null);
+  const [commentUpdateText, setCommentUpdateText] = useState<string>("");
   const currentUser = useSelector((state: Store) => state.auth.currentUser);
   const currentLocation = useSelector(
     (state: Store) => state.location.specificLocation
@@ -36,6 +37,10 @@ const LocationDetails = () => {
   const { isLoading, error } = useSelector((state: Store) => state.location);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const length = currentLocation?.comment.length;
+  const [toggleArray, setToggleArray] = useState<boolean[]>(
+    new Array(length).fill(false)
+  );
 
   const onDeleteLocation = (id: string) => {
     dispatch(deleteLocation(id));
@@ -48,6 +53,12 @@ const LocationDetails = () => {
       console.log("show the bitch");
     }
   }, [dispatch, params.id]);
+
+  function toggleCommentOptions(i: any) {
+    const temp = [...toggleArray];
+    temp[i] = !temp[i];
+    setToggleArray(temp);
+  }
 
   if (error) {
     return <NoContent />;
@@ -91,15 +102,16 @@ const LocationDetails = () => {
         <div className="details">
           <h1>Name : {currentLocation?.location}</h1>
           <h3>Description : {currentLocation?.description}</h3>
-          {/* <h4>Created By : {currentLocation?.createdAt.fromNow()}</p> */}
+          <h4>Created By : {currentLocation?.author.username}</h4>
+          <p>Created: {moment(currentLocation?.createdAt).fromNow()}</p>
         </div>
       </div>
 
       <h2>Comments</h2>
       <hr className="sep-2" />
 
-      {currentLocation?.comment ? (
-        currentLocation?.comment.map((data) => {
+      {!isLoading && currentLocation?.comment ? (
+        currentLocation?.comment.map((data, index) => {
           return (
             <div className="comment-container" key={data._id}>
               <div className="comment">
@@ -132,31 +144,30 @@ const LocationDetails = () => {
                     <p>{data.text}</p>
                     <div className="comment-btn">
                       {currentUser &&
-                      commentToggle &&
+                      toggleArray[index] &&
                       currentUser._id === data.author.id ? (
                         <span className="button">
                           <button
-                            className={commentToggle ? "comment-btn" : "none"}
+                            className={
+                              toggleArray[index] ? "comment-btn" : "none"
+                            }
                             onClick={() => {
-                              setPopulateForm(!populateForm);
-                              dispatch(
-                                getSpecificComment(
-                                  currentLocation?._id,
-                                  data._id
-                                )
-                              );
+                              setPopulateForm(true);
+                              setCommentUpdateText(data.text);
                               setCommentId(data._id);
                             }}
                           >
                             Edit
                           </button>
                           <button
-                            className={commentToggle ? "comment-btn" : "none"}
+                            className={
+                              toggleArray[index] ? "comment-btn" : "none"
+                            }
                             onClick={() => {
                               dispatch(
                                 deleteComment(currentLocation?._id, data._id)
                               );
-                              window.location.reload();
+                              // window.location.reload();
                             }}
                           >
                             Delete
@@ -170,7 +181,7 @@ const LocationDetails = () => {
                     currentUser && currentUser._id === data.author.id ? (
                       <FaEllipsisV
                         className="options-btn"
-                        onClick={() => setCommentToggle(!commentToggle)}
+                        onClick={() => toggleCommentOptions(index)}
                       />
                     ) : null
                   }
@@ -193,6 +204,8 @@ const LocationDetails = () => {
         populateForm={populateForm}
         comment_id={comment_id || ""}
         location_id={params.id || ""}
+        commentUpdateText={commentUpdateText}
+        setPopulateForm={setPopulateForm}
       />
     </div>
   );

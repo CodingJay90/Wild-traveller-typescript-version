@@ -1,7 +1,7 @@
 import React from "react";
 import LocationItem from "./LocationItem";
 import "../explore/Explore.css";
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 
 interface IProps {
   item: ILocation[];

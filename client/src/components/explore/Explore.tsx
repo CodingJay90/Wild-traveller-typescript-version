@@ -15,7 +15,7 @@ import {
   sortLocationByDateCreated,
 } from "../../redux/action-creators/location.action";
 import Location from "../location/Location";
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 
 const Explore = () => {
   const dispatch = useDispatch();

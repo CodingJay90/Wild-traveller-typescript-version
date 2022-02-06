@@ -6,8 +6,11 @@ import {
   loginUserApi,
   registerUserApi,
   updateUserApi,
-} from "../../api/auth.api";
-import { IUser, IUserForm } from "../../utils/authInterface";
+} from "../../services/api/auth.api";
+import {
+  IUser,
+  IUserForm,
+} from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
@@ -46,7 +49,7 @@ export const updateUser =
   (userDetails: IUserForm) => async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await updateUserApi("/user/update/", userDetails);
-      dispatch({ type: ActionType.UPDATE_USER, payload: data });
+      dispatch({ type: ActionType.UPDATE_USER, payload: data.updatedUser });
     } catch (error: any) {
       console.log(error);
     }
