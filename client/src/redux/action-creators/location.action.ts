@@ -9,8 +9,11 @@ import {
   getSpecificLocationApi,
   updateCommentApi,
   updateLocationApi,
-} from "../../api/location.api";
-import { ILocation, ILocationForm } from "../../utils/LocationInterface";
+} from "../../services/api/location.api";
+import {
+  ILocation,
+  ILocationForm,
+} from "../../services/utils/interfaces/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 import {
   DeleteCommentPayload,

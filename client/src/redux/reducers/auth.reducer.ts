@@ -1,4 +1,7 @@
-import { AuthErrors, IUser } from "../../utils/authInterface";
+import {
+  AuthErrors,
+  IUser,
+} from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 

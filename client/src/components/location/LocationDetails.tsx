@@ -13,7 +13,7 @@ import {
   getSpecificComment,
   getSpecificLocation,
 } from "../../redux/action-creators/location.action";
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 import NoContent from "../Extras/NoContent";
 import CreateCommentForm from "../forms/commentForm/CommentForm";
 

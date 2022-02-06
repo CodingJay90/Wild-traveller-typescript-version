@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
 import "./LocationItem.css";
 
-import { ILocation } from "../../utils/LocationInterface";
+import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 
 export interface LocationProps {
   item: ILocation;

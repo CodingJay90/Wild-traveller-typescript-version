@@ -6,7 +6,7 @@ import {
   updateComment,
 } from "../../../redux/action-creators/location.action";
 import { Store } from "../../../redux/reducers";
-import { ILocation } from "../../../utils/LocationInterface";
+import { ILocation } from "../../../services/utils/interfaces/LocationInterface";
 
 interface IProps {
   setPopulateForm(val: boolean): void;

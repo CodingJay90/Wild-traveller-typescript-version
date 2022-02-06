@@ -4,7 +4,7 @@ import Register from "../components/forms/auth/Auth";
 const RegisterPage = () => {
   return (
     <section>
-      <Register type="signup" />
+      <Register />
     </section>
   );
 };
