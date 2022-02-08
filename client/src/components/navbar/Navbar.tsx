@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import hamburger from "../../img/hamburger.png";
 import { Store } from "../../redux/reducers";
+import { deleteCookie } from "../../services/utils/cookiesFunctions";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +22,8 @@ const Navbar = () => {
   const { token, currentUser } = state;
 
   const logout = () => {
-    localStorage.removeItem("auth_token");
+    // localStorage.removeItem("auth_token");
+    deleteCookie("auth_token");
     toast.success("Logging you out", { theme: "dark" });
     setTimeout(() => {
       navigate("/");

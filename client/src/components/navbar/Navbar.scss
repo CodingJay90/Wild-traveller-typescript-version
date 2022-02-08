@@ -21,7 +21,7 @@
     z-index: 1;
   }
 
-  @include dektopBreakpoint() {
+  @include laptopBreakpoint() {
     font-size: 1rem;
   }
   @include tabletBreakpoint() {
@@ -35,7 +35,7 @@
       justify-content: space-between;
       text-align: center;
     }
-    @include dektopBreakpoint {
+    @include laptopBreakpoint {
       display: flex;
       justify-content: space-between;
       text-align: center;
@@ -54,7 +54,7 @@
       @include tabletBreakpoint {
         border-bottom: none;
       }
-      @include dektopBreakpoint {
+      @include laptopBreakpoint {
         padding: 1rem;
         font-weight: 600;
         font-size: 1.2em;
@@ -89,7 +89,7 @@
       @include tabletBreakpoint {
         display: none;
       }
-      @include dektopBreakpoint {
+      @include laptopBreakpoint {
         display: none;
       }
     }
@@ -107,7 +107,7 @@
         display: flex;
         justify-content: space-between;
       }
-      @include dektopBreakpoint {
+      @include laptopBreakpoint {
         display: block;
         transform: translateY(0);
         opacity: 1;
@@ -127,7 +127,7 @@
     background-color: #fff;
     cursor: default;
   }
-  @include dektopBreakpoint {
+  @include laptopBreakpoint {
     color: #111;
     font-size: 1.5em;
     text-align: center;

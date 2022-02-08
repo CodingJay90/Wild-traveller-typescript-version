@@ -24,13 +24,10 @@ const Explore = () => {
   const state = useSelector((state: Store) => state.location);
   const { token } = useSelector((state: Store) => state.auth);
   const { location, isLoading } = state;
-  useEffect(() => {
-    console.log(token);
-  }, [state]);
   const [query, setQuery] = useState<string>("");
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const navigateToCreatePage = (): void => {
-    if (token) navigate("/create");
+    if (token) return navigate("/create");
     setShowAuthModal(true);
   };
 

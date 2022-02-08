@@ -1,12 +1,12 @@
-export function setCookie(cname: string, cvalue: string, exdays: number) {
+export function setCookie(cookieName: string, cvalue: string, exdays: number) {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   let expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = cookieName + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-export function getCookie(cname: string) {
-  let name = cname + "=";
+export function getCookie(cookieName: string) {
+  let name = cookieName + "=";
   let ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
@@ -18,4 +18,8 @@ export function getCookie(cname: string) {
     }
   }
   return "";
+}
+
+export function deleteCookie(cookieName: string) {
+  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }

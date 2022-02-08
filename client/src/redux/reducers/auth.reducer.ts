@@ -1,4 +1,9 @@
 import {
+  deleteCookie,
+  getCookie,
+  setCookie,
+} from "../../services/utils/cookiesFunctions";
+import {
   AuthErrors,
   IUser,
 } from "../../services/utils/interfaces/authInterface";
@@ -17,7 +22,7 @@ export interface AuthState {
 
 const initialState = {
   isAuthenticated: false,
-  token: localStorage.getItem("auth_token"),
+  token: getCookie("auth_token"),
   error: null,
   currentUser: null,
   success: null,
@@ -29,7 +34,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
   switch (action.type) {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
-      localStorage.setItem("auth_token", action.payload.token || "");
+      setCookie("auth_token", action.payload.token, 1);
+      // localStorage.setItem("auth_token", action.payload.token || "");
       return {
         ...state,
         isAuthenticated: true,
@@ -46,7 +52,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         currentUser: action.payload,
       };
     case ActionType.DELETE_USER:
-      localStorage.removeItem("auth_token");
+      // localStorage.removeItem("auth_token");\
+      deleteCookie("auth_token");
       return {
         ...state,
         currentUser: null,
@@ -56,6 +63,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       return {
         ...state,
         currentUser: action.payload,
+        isAuthenticated: true,
       };
     case ActionType.GET_SPECIFIC_USER:
       return {
@@ -70,7 +78,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       };
     case ActionType.LOGIN_USER_FAIL:
     case ActionType.REGISTER_USER_FAIL:
-      localStorage.removeItem("auth_token");
+      // localStorage.removeItem("auth_token");
+      deleteCookie("auth_token");
       return {
         ...state,
         isAuthenticated: null,

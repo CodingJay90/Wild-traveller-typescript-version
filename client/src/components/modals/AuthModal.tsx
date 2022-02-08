@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Rodal from "rodal";
 import "./AuthModal.scss";
@@ -6,6 +6,12 @@ import "./AuthModal.scss";
 // include styles
 import "rodal/lib/rodal.css";
 import { useForm } from "../../hooks/useForm";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginUser,
+  registerUser,
+} from "../../redux/action-creators/auth.action";
+import { Store } from "../../redux/reducers";
 interface IProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,9 +26,13 @@ interface InputInterface {
 }
 interface InputsProps {
   inputs: InputInterface[];
+  errors?: string[] | undefined;
   isSignUp?: boolean;
   inUpClick?: () => void;
-  submitForm: () => void;
+  submitForm: (event: FormEvent<HTMLFormElement>) => void;
+  onChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 const loginInputs: InputInterface[] = [
   {
@@ -80,6 +90,10 @@ const signupInputs: InputInterface[] = [
 // slideRight
 
 const AuthModal = ({ visible, setVisible }: IProps) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const state = useSelector((state: Store) => state.auth);
+  const { error } = state;
   const { values, onChange, onSubmit } = useForm(submitForm, {
     email: "",
     username: "",
@@ -128,7 +142,10 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
     stagger(start);
   }
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (!isSignUp) return dispatch(loginUser(values));
+    dispatch(registerUser(values));
+  };
 
   function submitForm() {
     handleSubmit();
@@ -142,39 +159,78 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
             isSignUp={isSignUp}
             inputs={loginInputsState}
             inUpClick={inUpClick}
-            submitForm={submitForm}
+            submitForm={onSubmit}
+            errors={error?.errorMessages}
+            onChange={onChange}
           />
           <SignUp
             isSignUp={isSignUp}
             inputs={signupInputsState}
             inUpClick={inUpClick}
-            submitForm={submitForm}
+            submitForm={onSubmit}
+            errors={error?.errorMessages}
+            onChange={onChange}
           />
         </div>
       </Rodal>
     </div>
   );
 };
+interface EProps {
+  errors: string[] | undefined;
+}
+const Error = ({ errors }: EProps) => {
+  console.log(errors);
+  return (
+    <>
+      {errors ? (
+        <div className="error__alert">
+          <ul>
+            {errors?.map((i: string) => (
+              <li>{i}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </>
+  );
+};
 
-const Login = ({ inputs, isSignUp, inUpClick, submitForm }: InputsProps) => (
+const Login = ({
+  inputs,
+  isSignUp,
+  inUpClick,
+  submitForm,
+  errors,
+  onChange,
+}: InputsProps) => (
   <div className={isSignUp ? "login login--closed" : "login"}>
     <h1>Log In required!</h1>
     <hr />
-    <Form inputs={inputs} submitForm={submitForm} />
+    <Form onChange={onChange} inputs={inputs} submitForm={submitForm} />
     <SignupLink inUpClick={inUpClick} />
+    <Error errors={errors} />
   </div>
 );
 
-const SignUp = ({ inputs, isSignUp, inUpClick, submitForm }: InputsProps) => (
+const SignUp = ({
+  inputs,
+  isSignUp,
+  inUpClick,
+  submitForm,
+  errors,
+  onChange,
+}: InputsProps) => (
   <div className={isSignUp ? "signUp" : "signUp signUp--closed"}>
     <h1>Sign Up</h1>
     <hr />
-    <Form inputs={inputs} submitForm={submitForm} />
+    <Form onChange={onChange} inputs={inputs} submitForm={submitForm} />
     <LoginLink inUpClick={inUpClick} />
+    <Error errors={errors} />
   </div>
 );
 
-const Form = ({ inputs, submitForm }: InputsProps) => {
+const Form = ({ inputs, submitForm, onChange }: InputsProps) => {
   const inputsMapped = inputs.map((i: InputInterface) => (
     <Input
       label={i.label}
@@ -184,6 +240,7 @@ const Form = ({ inputs, submitForm }: InputsProps) => {
       id={i.id}
       key={i.id}
       name={i.name}
+      onChange={onChange}
     />
   ));
 
@@ -205,7 +262,16 @@ const Submit = () => (
   </div>
 );
 
-const Input = ({ label, type, show, validated, id, validateField }: any) => (
+const Input = ({
+  label,
+  type,
+  show,
+  validated,
+  id,
+  validateField,
+  name,
+  onChange,
+}: any) => (
   <div className={show ? "form__field form__field--in" : "form__field"}>
     <label className="form__label">
       {label}
@@ -214,7 +280,7 @@ const Input = ({ label, type, show, validated, id, validateField }: any) => (
         aria-hidden="true"
       ></i>
     </label>
-    <input className="input" type={type} />
+    <input className="input" type={type} onChange={onChange} name={name} />
   </div>
 );
 

@@ -51,21 +51,13 @@ const Auth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (error?.errorMessages.length || isAuthenticated) {
+    if (error?.errorMessages.length) {
       setSpinnerLoader(isLoading);
-      // dispatch(resetState());
-      console.log(error, "ss");
-      error?.errorMessages.map((msg) => toast.error(msg, { theme: "dark" }));
+      setShowToast(true);
     }
     if (isAuthenticated) {
       setSpinnerLoader(isLoading);
-      toast.success(!isSignin ? "SignUp successful" : "Login successful", {
-        theme: "dark",
-      });
-
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      navigate("/");
     }
   }, [state, error]);
 
@@ -74,15 +66,13 @@ const Auth = () => {
       dispatch(clearError());
     };
   }, []);
-  console.log(values);
 
-  // const onChange = (
-  //   event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ): void => setValue({ ...value, [event.target.name]: event.target.value });
+  // useEffect(() => {
+  //   if (error) setShowToast(true);
+  // }, [error]);
 
   const handleSubmit = () => {
     setSpinnerLoader(true);
-    setShowToast(true);
     if (!isSignin) dispatch(registerUser(values));
     if (isSignin) dispatch(loginUser(values));
   };
@@ -246,7 +236,13 @@ const Auth = () => {
           </div>
         </div>
       </div>
-      <ToastAlert visible={showToast} heading={"authwerrr"} msg="eror woo" />
+      <ToastAlert
+        setVisible={setShowToast}
+        visible={showToast}
+        heading={"Authentication Error"}
+        msg={error?.errorMessages}
+        autoClose={false}
+      />
       <LoadingSpinner
         color={"#fff"}
         loading={spinnerLoader}

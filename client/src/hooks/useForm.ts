@@ -5,11 +5,11 @@ export const useForm = (callback: () => void, initialState: any) => {
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     callback();
   };

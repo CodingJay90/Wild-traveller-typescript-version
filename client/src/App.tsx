@@ -19,10 +19,11 @@ import { AuthState } from "./redux/reducers/auth.reducer";
 import FreakingComponent from "./FreakingComponent";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import AuthModal from "./components/modals/AuthModal";
+import { getCookie } from "./services/utils/cookiesFunctions";
 
 function App() {
   const dispatch = useDispatch();
-  const authToken = localStorage.getItem("auth_token");
+  const authToken = getCookie("auth_token");
   useEffect(() => {
     if (authToken) dispatch(loadUser());
     dispatch(getLocations());

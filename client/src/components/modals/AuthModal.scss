@@ -1,6 +1,7 @@
+@import "../../styles/partials/mixins";
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,700);
-
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css);
+
 .auth__modal {
   .form {
     width: 100%;
@@ -166,14 +167,38 @@
     }
   }
 
+  .error__alert {
+    bottom: 5%;
+    width: 90%;
+    color: rgb(236, 8, 8);
+    display: block;
+    right: 0;
+    left: 0;
+    padding: 0.6rem;
+    /* background: #eb4646; */
+    text-align: left;
+    li {
+      margin-bottom: 0.3rem;
+      padding: 0.4rem;
+      border-radius: 0.2rem;
+      font-size: 0.85rem;
+    }
+  }
+
   // RODAL
   .rodal-mask {
     background: rgba(0, 0, 0, 0.836) !important;
   }
 
   .rodal-dialog {
-    height: 50vh !important;
+    height: 80vh !important;
     width: 471px !important;
     padding: 0;
+    @include desktopBreakpoint() {
+      height: 50vh !important;
+    }
+    // @include desktopBreakpoint-up-sm() {
+    //   height: 50vh !important;
+    // }
   }
 }

@@ -62,7 +62,7 @@ const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json({
         success: false,
         errorMessages: createErrorResponse(
-          "A user with the given email do not exist"
+          "A user with the given email does not exist"
         ),
       });
     }
