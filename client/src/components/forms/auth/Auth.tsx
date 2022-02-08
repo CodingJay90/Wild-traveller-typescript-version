@@ -19,17 +19,25 @@ import {
 } from "../../../redux/action-creators/auth.action";
 import { Store } from "../../../redux/reducers";
 import LoadingSpinner from "../../Extras/LoadingSpinner";
-interface IProps {
-  type: string;
-}
+import { useForm } from "../../../hooks/useForm";
+import ToastAlert from "../../toast/ToastAlert";
 
 const Auth = () => {
+  const { values, onChange, onSubmit } = useForm(authCallback, {
+    email: "",
+    username: "",
+    password: "",
+    bio: "",
+    gender: "",
+    avatar: "",
+  });
   const signupRef = useRef<HTMLDivElement>(null);
   const signinRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const state = useSelector((state: Store) => state.auth);
   const [spinnerLoader, setSpinnerLoader] = useState(false);
   const { isLoading, isAuthenticated, error } = state;
+  const [showToast, setShowToast] = useState(false);
 
   const [value, setValue] = useState({
     email: "",
@@ -57,7 +65,7 @@ const Auth = () => {
 
       setTimeout(() => {
         navigate("/");
-      }, 5000);
+      }, 3000);
     }
   }, [state, error]);
 
@@ -66,19 +74,22 @@ const Auth = () => {
       dispatch(clearError());
     };
   }, []);
+  console.log(values);
 
-  const onChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => setValue({ ...value, [event.target.name]: event.target.value });
+  // const onChange = (
+  //   event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ): void => setValue({ ...value, [event.target.name]: event.target.value });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     setSpinnerLoader(true);
-    if (!isSignin) dispatch(registerUser(value));
-    if (isSignin) dispatch(loginUser(value));
-    // if (type === "signup") dispatch(registerUser(value));
-    // if (type === "signin") dispatch(loginUser(value));
+    setShowToast(true);
+    if (!isSignin) dispatch(registerUser(values));
+    if (isSignin) dispatch(loginUser(values));
   };
+
+  function authCallback() {
+    handleSubmit();
+  }
 
   const toggleComponents = (): void => {
     setIsSignin(!isSignin);
@@ -109,11 +120,11 @@ const Auth = () => {
             <div className="or">
               <span>OR</span>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="email"
+                placeholder="Email"
                 onChange={onChange}
               />
               <input
@@ -235,6 +246,12 @@ const Auth = () => {
           </div>
         </div>
       </div>
+      <ToastAlert visible={showToast} heading={"authwerrr"} msg="eror woo" />
+      <LoadingSpinner
+        color={"#fff"}
+        loading={spinnerLoader}
+        loadingText="Signing up. Please wait...."
+      />
 
       {/* </form> */}
       {/* <div className="Signup">
@@ -325,12 +342,8 @@ const Auth = () => {
         loading={spinnerLoader}
         loadingText="Signing up. Please wait...."
       />
-      <ToastContainer /> */}
-      <LoadingSpinner
-        color={"#fff"}
-        loading={spinnerLoader}
-        loadingText="Signing up. Please wait...."
-      />
+      */}
+      {/* <ToastContainer /> */}
     </React.Fragment>
   );
 };

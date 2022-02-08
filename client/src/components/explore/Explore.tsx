@@ -16,6 +16,7 @@ import {
 } from "../../redux/action-creators/location.action";
 import Location from "../location/Location";
 import { ILocation } from "../../services/utils/interfaces/LocationInterface";
+import AuthModal from "../modals/AuthModal";
 
 const Explore = () => {
   const dispatch = useDispatch();
@@ -24,10 +25,14 @@ const Explore = () => {
   const { token } = useSelector((state: Store) => state.auth);
   const { location, isLoading } = state;
   useEffect(() => {
-    console.log(location);
+    console.log(token);
   }, [state]);
-  const [query, setQuery] = useState("");
-  //   console.log(location.length);
+  const [query, setQuery] = useState<string>("");
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const navigateToCreatePage = (): void => {
+    if (token) navigate("/create");
+    setShowAuthModal(true);
+  };
 
   //   //SORTING
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -42,17 +47,16 @@ const Explore = () => {
     return rows.filter((row) => row.location.toLowerCase().indexOf(query) > -1);
   };
 
-  //   const naviagate = useNavigate();
-
   //PAGINATION
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage] = useState<number>(6);
   //Get current post
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = location.slice(indexOfFirstPost, indexOfLastPost);
   //Change Page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <div className="Explore">
       <div className="showcase">
@@ -65,9 +69,12 @@ const Explore = () => {
               about it
             </h2>
             <h3>Start by adding your Location</h3>
-            <Link className="btn btn-outline-warning" to="/create">
+            <button
+              className="btn btn-outline-warning"
+              onClick={navigateToCreatePage}
+            >
               Add Location
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -117,6 +124,7 @@ const Explore = () => {
         paginate={paginate}
         currentPage={currentPage}
       />
+      <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
 
       <Footer />
     </div>

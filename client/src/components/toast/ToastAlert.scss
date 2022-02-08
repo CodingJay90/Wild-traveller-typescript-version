@@ -1,0 +1,125 @@
+@charset "UTF-8";
+:root {
+  --general-main-1: #0e0e0e;
+  --general-main-2: #151717;
+  --button-secondary-hover: hsla(0, 0%, 100%, 0.08);
+  --overlay: rgba(0, 0, 0, 0.72);
+  --shadow-menu: rgba(0, 0, 0, 0.84);
+  --status-danger: #cc2e3d;
+  --status-warning: #ffad3a;
+  --status-info: #377cfc;
+  --badge-blue: #0677af;
+  --badge-violet: #2a3052;
+  --badge-green: #00a79e;
+}
+
+.notification {
+  position: fixed;
+  top: calc(100vh - 90vh);
+  z-index: 1000;
+  right: 2%;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 4px 6px 0 var(--overlay), 0 4px 6px 0 var(--overlay);
+  box-shadow: 0 4px 6px 0 var(--overlay), 0 4px 6px 0 var(--overlay);
+  background-color: var(--general-main-1);
+  opacity: 0.5;
+  color: var(--text-prominent);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 40rem;
+  overflow: hidden;
+  padding: 0.89rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  width: 20vw;
+  -webkit-transform: translateX(130%);
+  transform: translateX(130%);
+}
+
+@media only screen and (min-width: 768px) {
+  .notification {
+    width: 35vw;
+  }
+}
+
+.notification__icon-background {
+  bottom: -5px;
+  left: -25px;
+  opacity: 0.17;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+  background: url(https://img.icons8.com/cotton/64/000000/info--v5.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left;
+  width: 100%;
+  height: 100%;
+}
+
+.notification__text-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+  line-height: 2;
+}
+
+.notification__header {
+  color: var(--status-info);
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  width: 75%;
+}
+
+.notification__text-body {
+  width: 75%;
+  font-size: 0.79em;
+  line-height: 1.23;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.notification__text-body a {
+  color: #00a79e;
+  letter-spacing: 2px;
+}
+
+.notification__close-button {
+  background: 0 0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  right: 1.6rem;
+  top: 0.4rem;
+  top: 1rem;
+  visibility: visible;
+  z-index: 2;
+}
+
+.notification__close-button::after {
+  color: #fff;
+  content: "\0000D7";
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.notification--enter {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
