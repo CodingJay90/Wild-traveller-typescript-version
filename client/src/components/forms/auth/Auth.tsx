@@ -23,13 +23,14 @@ import { useForm } from "../../../hooks/useForm";
 import ToastAlert from "../../toast/ToastAlert";
 
 const Auth = () => {
+  const [avatar, setAvatar] = useState("");
   const { values, onChange, onSubmit } = useForm(authCallback, {
     email: "",
     username: "",
     password: "",
     bio: "",
     gender: "",
-    avatar: "",
+    avatar,
   });
   const signupRef = useRef<HTMLDivElement>(null);
   const signinRef = useRef<HTMLDivElement>(null);
@@ -39,14 +40,6 @@ const Auth = () => {
   const { isLoading, isAuthenticated, error } = state;
   const [showToast, setShowToast] = useState(false);
 
-  const [value, setValue] = useState({
-    email: "",
-    username: "",
-    password: "",
-    bio: "",
-    gender: "",
-    avatar: "",
-  });
   const [isSignin, setIsSignin] = useState<Boolean>(true);
   const navigate = useNavigate();
 
@@ -59,6 +52,7 @@ const Auth = () => {
       setSpinnerLoader(isLoading);
       navigate("/");
     }
+    console.log(state);
   }, [state, error]);
 
   useEffect(() => {
@@ -186,9 +180,7 @@ const Auth = () => {
               <FileBase64
                 type="file"
                 multiple={false}
-                onDone={({ base64 }: { base64: string }) =>
-                  setValue({ ...value, avatar: base64 })
-                }
+                onDone={({ base64 }: { base64: string }) => setAvatar(base64)}
               />
               <button className="btn-signin">Sign Up</button>
               <a

@@ -1,5 +1,6 @@
 import axios from "axios";
-const token = localStorage.getItem("auth_token");
+import { getCookie } from "../utils/cookiesFunctions";
+const token = getCookie("auth_token");
 
 const locationClient = axios.create({
   baseURL: "http://localhost:5000/api/v2/location",

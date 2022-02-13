@@ -1,3 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap"); // colors
+$primary-color: #020c1b;
+$primary-color-light: #16233a;
+$primary-color-md: #112240;
+$grey: #404040;
+$white: #fff;
+$primary-white: #e6f1ff;
+$secondary-white: #f7f7f7;
+
+//Fonts
+$font-Lato: "Lato", sans-serif;
+$font-Open-Sans: "Open Sans", sans-serif;
+$font-Roboto: "Roboto", sans-serif;
 // Small devices (landscape phones, 576px and up)
 $laptopBreakpoint: 1200px;
 $tabletBreakpoint: 1200px;

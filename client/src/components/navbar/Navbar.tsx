@@ -50,28 +50,6 @@ const Navbar = () => {
           />
         </div>
       </div>
-      <div
-        className={
-          !menuOpen ? "navbar__group" : "navbar__group navbar__group--none"
-        }
-      >
-        <div className="navbar__group-item">
-          <NavLink to="/">
-            <span>
-              <FaHome />
-            </span>
-            Home
-          </NavLink>
-        </div>
-        <div className="navbar__group-item">
-          <NavLink to="/contact">
-            <span>
-              <FaAddressCard />
-            </span>
-            Contact
-          </NavLink>
-        </div>
-      </div>
       {!token ? (
         <div
           className={
@@ -79,10 +57,7 @@ const Navbar = () => {
           }
         >
           <div className="navbar__group-item">
-            <NavLink to="/signup">SignUp</NavLink>
-          </div>
-          <div className="navbar__group-item">
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/login">Login / Register</NavLink>
           </div>
         </div>
       ) : (

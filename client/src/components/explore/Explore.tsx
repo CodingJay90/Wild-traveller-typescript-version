@@ -16,7 +16,7 @@ import {
 } from "../../redux/action-creators/location.action";
 import Location from "../location/Location";
 import { ILocation } from "../../services/utils/interfaces/LocationInterface";
-import AuthModal from "../modals/AuthModal";
+import AuthModal from "../Extras/modals/authModal/AuthModal";
 
 const Explore = () => {
   const dispatch = useDispatch();

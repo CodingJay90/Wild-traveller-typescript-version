@@ -4,7 +4,9 @@ import { AuthRequest } from "../interfaces/user.interface";
 
 const getLocations = async (req: Request, res: Response) => {
   try {
-    const foundLocation = await Location.find({}).populate("comment");
+    const foundLocation = await Location.find({})
+      .sort({ date: -1 })
+      .populate("comment");
 
     res.status(200).json(foundLocation);
   } catch (error: any) {

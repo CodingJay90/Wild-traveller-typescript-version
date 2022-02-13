@@ -21,7 +21,6 @@ const ToastAlert = ({
   const notificationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log(visible);
     if (autoClose) setTimeout(() => closeAlert(), timeout);
   }, [visible]);
 

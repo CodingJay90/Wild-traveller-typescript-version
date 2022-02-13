@@ -35,7 +35,6 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
       setCookie("auth_token", action.payload.token, 1);
-      // localStorage.setItem("auth_token", action.payload.token || "");
       return {
         ...state,
         isAuthenticated: true,
@@ -52,7 +51,6 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         currentUser: action.payload,
       };
     case ActionType.DELETE_USER:
-      // localStorage.removeItem("auth_token");\
       deleteCookie("auth_token");
       return {
         ...state,
@@ -66,6 +64,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         isAuthenticated: true,
       };
     case ActionType.GET_SPECIFIC_USER:
+      console.log(action.payload);
       return {
         ...state,
         specificUser: action.payload,

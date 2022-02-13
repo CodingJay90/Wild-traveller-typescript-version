@@ -76,9 +76,15 @@ export const loadUser = () => async (dispatch: Dispatch<AuthAction>) => {
 export const getSpecificUser =
   (id: string) => async (dispatch: Dispatch<AuthAction>) => {
     try {
+      dispatch({ type: ActionType.USER_LOADING });
       const { data } = await getSpecificUserApi(`sessions/${id}`);
-      console.log(data);
-      dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: data.foundUser });
+      const userData = {
+        ...data.user,
+        comments: data.comments,
+        locations: data.locations,
+      };
+      console.log(id);
+      dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: userData });
     } catch (error: any) {
       console.log(error.response);
       dispatch({ type: ActionType.USER_LOADED_FAIL, payload: error });

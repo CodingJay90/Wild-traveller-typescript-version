@@ -2,15 +2,26 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
 import User from "../models/user.model";
+import Location from "../models/location.model";
+import Comment from "../models/comment.model";
 import { generateToken } from "../utils/signToken";
 import IUser, { AuthRequest } from "../interfaces/user.interface";
+const imagesArray = [
+  "https://emedia1.nhs.wales/HEIW2/cache/file/F4C33EF0-69EE-4445-94018B01ADCF6FD4.png",
+  "https://media.istockphoto.com/vectors/anonymous-gender-neutral-face-avatar-incognito-head-silhouette-vector-id1334533935?b=1&k=20&m=1334533935&s=170667a&w=0&h=dzIHGt2seqmK-AgONwY52LkjHiv651roemNHDgoBaHI=",
+  "https://e7.pngegg.com/pngimages/529/6/png-clipart-computer-icons-airplane-smiley-person-icon-yellow.png",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYBgkmyXnekpz06gd_1dgDuB_fXCwntWbsUzWWpk7rQd_1wcqFdZyVgv6p-c2_NQtIxPM&usqp=CAU",
+  "https://pngimage.net/wp-content/uploads/2019/05/human-avatar-png-4.png",
+];
 
 function createErrorResponse(...msg: any): string[] {
   return msg;
 }
 
 const createUser = async (req: Request, res: Response) => {
-  const { email, username, avatar, password, bio, gender } = req.body;
+  let { email, username, avatar, password, bio, title } = req.body;
+  if (!avatar)
+    avatar = imagesArray[Math.floor(Math.random() * imagesArray.length)];
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt
     .hash(password, salt)
@@ -32,7 +43,7 @@ const createUser = async (req: Request, res: Response) => {
       avatar,
       username,
       bio,
-      gender,
+      title,
       password: hashedPassword,
     });
     const token = generateToken(newUser);
@@ -94,13 +105,22 @@ const accessUser = async (req: AuthRequest, res: Response) => {
 
 const getSpecificUser = async (req: AuthRequest, res: Response) => {
   try {
-    User.findById(req.params.id)
-      .then((foundUser) => {
-        res.status(200).json({ success: true, foundUser });
-      })
-      .catch((err) =>
-        res.status(400).json({ success: false, message: err.message })
-      );
+    const user = await User.findById(req.params.id);
+    const locations = await Location.find({ ["author.id"]: req.params.id });
+    const comments = await Comment.find({ ["author.id"]: req.params.id });
+    res.status(200).json({
+      success: true,
+      user: user,
+      comments: comments.length,
+      locations: locations.length,
+    });
+    // User.findById(req.params.id)
+    //   .then((foundUser) => {
+    //     res.status(200).json({ success: true, foundUser });
+    //   })
+    //   .catch((err) =>
+    //     res.status(400).json({ success: false, message: err.message })
+    //   );
   } catch (error: any) {
     res.status(400).json(error.message);
     console.log(error);

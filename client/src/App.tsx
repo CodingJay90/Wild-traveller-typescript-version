@@ -18,15 +18,19 @@ import { getLocations } from "./redux/action-creators/location.action";
 import { AuthState } from "./redux/reducers/auth.reducer";
 import FreakingComponent from "./FreakingComponent";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
-import AuthModal from "./components/modals/AuthModal";
+import AuthModal from "./components/Extras/modals/authModal/AuthModal";
 import { getCookie } from "./services/utils/cookiesFunctions";
+import Test from "./Test";
+import { checkTokenExpiration } from "./services/utils/auth";
 
 function App() {
   const dispatch = useDispatch();
   const authToken = getCookie("auth_token");
   useEffect(() => {
-    if (authToken) dispatch(loadUser());
+    console.log(checkTokenExpiration(authToken));
+    if (!checkTokenExpiration(authToken)) dispatch(loadUser());
     dispatch(getLocations());
+    // if (authToken) dispatch(loadUser());
   }, [dispatch]);
 
   return (
@@ -56,7 +60,6 @@ function App() {
           <Route path="/dashboard" element={<UserProfilePage />} />
         </Routes>
       </BrowserRouter>
-      {/* <FreakingComponent /> */}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import "./Contact.css";
+import "./Contact.scss";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import Footer from "../footer/Footer";
 

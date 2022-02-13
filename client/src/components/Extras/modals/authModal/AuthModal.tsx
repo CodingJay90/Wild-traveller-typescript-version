@@ -5,13 +5,13 @@ import "./AuthModal.scss";
 
 // include styles
 import "rodal/lib/rodal.css";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loginUser,
   registerUser,
-} from "../../redux/action-creators/auth.action";
-import { Store } from "../../redux/reducers";
+} from "../../../../redux/action-creators/auth.action";
+import { Store } from "../../../../redux/reducers";
 interface IProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -92,8 +92,7 @@ const signupInputs: InputInterface[] = [
 const AuthModal = ({ visible, setVisible }: IProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const state = useSelector((state: Store) => state.auth);
-  const { error } = state;
+  const { error, isAuthenticated } = useSelector((state: Store) => state.auth);
   const { values, onChange, onSubmit } = useForm(submitForm, {
     email: "",
     username: "",
@@ -107,6 +106,13 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
     useState<InputInterface[]>(signupInputs);
   const [loginInputsState, setLoginInputsState] =
     useState<InputInterface[]>(loginInputs);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/explore");
+      setVisible(false);
+    }
+  }, [isAuthenticated]);
 
   function inUpClick(): void {
     setIsSignup(!isSignUp);
@@ -180,7 +186,6 @@ interface EProps {
   errors: string[] | undefined;
 }
 const Error = ({ errors }: EProps) => {
-  console.log(errors);
   return (
     <>
       {errors ? (
@@ -305,48 +310,5 @@ const LoginLink = ({ inUpClick }: any) => (
     </p>
   </div>
 );
-
-/*
-    {/* <div className="modal fade">
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content form-wrapper">
-        <div className="close-box" data-dismiss="modal">
-          <i className="fa fa-times fa-2x"></i>
-        </div>
-        <div className="container-fluid mt-5">
-          <form action="{{route('login')}}" method="post" id="LoginForm">
-            <div className="form-group text-center">
-              <h4>Login Form</h4>
-              <h6>Enter your credentials</h6>
-            </div>
-            <div className="form-group" style={{position: "relative"}}>
-              <label htmlFor="l_email">Email</label>
-              <input type="email" id="l_email" className="form-control mb-1" placeholder="someone@something.domain" required/>
-              
-              
-              
-            </div>
-            <div className="form-group pb-3" style={{position: "relative"}}>
-              <label htmlFor="l_password">Password</label>
-              <input type="password" id="l_password" className="form-control mb-1" placeholder="*******************" required/>
-              <a href="#forgotPassword" style={{display:block position: absolute; right: 0}} title="Fill Email Field and Click it">
-                Forgot Password?
-              </a>
-            </div>
-            <div className="form-group pt-2">
-              <button className="btn btn-info form-control">Login</button>
-            </div>
-            <div className="form-group text-center pt-2 social-login">
-              <h6>OR Continue with</h6>
-              <a href="#" className="google"> <i className="fa fa-google-plus fa-lg"></i> </a>
-              <a href="#" className="facebook"> <i className="fa fa-facebook fa-lg"></i> </a>
-              <a href="#" className="twitter"> <i className="fa fa-twitter fa-lg"></i> </a>
-              <a href="#" className="github"> <i className="fa fa-github fa-lg"></i> </a>
-            </div>
-          </form>
-        </div>
-      </div>
-        </div>
-      </div>*/
 
 export default AuthModal;

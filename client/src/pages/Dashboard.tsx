@@ -1,10 +1,10 @@
 import React from "react";
-import Profile from "../components/dashboard/Profile";
+import DashboardComponent from "../components/dashboard/Dashboard";
 
 const Dashboard = () => {
   return (
     <section>
-      <Profile />
+      <DashboardComponent />
     </section>
   );
 };
