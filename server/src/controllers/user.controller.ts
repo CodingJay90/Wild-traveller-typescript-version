@@ -114,13 +114,6 @@ const getSpecificUser = async (req: AuthRequest, res: Response) => {
       comments: comments.length,
       locations: locations.length,
     });
-    // User.findById(req.params.id)
-    //   .then((foundUser) => {
-    //     res.status(200).json({ success: true, foundUser });
-    //   })
-    //   .catch((err) =>
-    //     res.status(400).json({ success: false, message: err.message })
-    //   );
   } catch (error: any) {
     res.status(400).json(error.message);
     console.log(error);
@@ -134,6 +127,7 @@ const updateUser = async (req: AuthRequest, res: Response) => {
       req.body,
       { new: true, useFindAndModify: false }
     )) as IUser;
+    console.log(req.body);
 
     generateToken(updatedUser);
     res.status(200).json({ success: true, updatedUser });

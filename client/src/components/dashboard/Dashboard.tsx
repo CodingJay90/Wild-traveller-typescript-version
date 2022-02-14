@@ -21,21 +21,18 @@ const Dashboard = () => {
   // const isLoading = useSelector((state: Store) => state.auth.isLoading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [avatar, setAvatar] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>(specificUser?.avatar || "");
   const [toggle, setToggle] = useState<boolean>(false);
   const [values, setValues] = useState({
     username: specificUser?.username,
     bio: specificUser?.bio,
-    avatar,
+    avatar: "",
     title: specificUser?.title,
     country: specificUser?.country,
     city: specificUser?.city,
     firstName: specificUser?.firstName,
     lastName: specificUser?.lastName,
   });
-  // const { values, onChange, onSubmit } = useForm(authCallback, {
-  //   ...formValues,
-  // });
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -50,11 +47,14 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    if (currentUser?._id) dispatch(getSpecificUser(currentUser?._id || ""));
+    if (currentUser?._id) {
+      setValues({ ...values, avatar: currentUser?.avatar || "" }); //set avatar to state from redux in order not to set undefined when updating other fields
+      dispatch(getSpecificUser(currentUser?._id || ""));
+    }
   }, [currentUser]);
 
   const handleDelete = () => {
-    // dispatch(deleteUser());
+    dispatch(deleteUser());
     navigate("/explore");
   };
 
@@ -326,7 +326,7 @@ const Dashboard = () => {
                           data-toggle="modal"
                           className="btn btn-danger"
                         >
-                          Delte Account
+                          Delete Account
                         </a>
                       </form>
                     </div>
@@ -339,7 +339,7 @@ const Dashboard = () => {
       </div>
       <ConfirmModal
         message="Do you really want to delete these records? This process cannot be undone."
-        callback={deleteUser}
+        callback={handleDelete}
       />
     </React.Fragment>
   );
