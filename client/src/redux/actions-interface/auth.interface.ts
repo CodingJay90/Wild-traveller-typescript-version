@@ -6,6 +6,7 @@ interface AuthPayload extends IUser {
   user: IUser;
   token: string;
   success: boolean;
+  keepSignedIn: boolean;
 }
 
 interface RegisterAction {

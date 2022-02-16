@@ -15,7 +15,8 @@ import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
 export const registerUser =
-  (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
+  (userDetails: IUser, keepSignedIn: boolean) =>
+  async (dispatch: Dispatch<AuthAction>) => {
     try {
       console.log(userDetails);
       dispatch({ type: ActionType.USER_LOADING });
@@ -31,11 +32,15 @@ export const registerUser =
   };
 
 export const loginUser =
-  (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
+  (userDetails: IUser, keepSignedIn: boolean) =>
+  async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await loginUserApi("sessions/", userDetails);
       console.log(data);
-      dispatch({ type: ActionType.LOGIN_USER, payload: data });
+      dispatch({
+        type: ActionType.LOGIN_USER,
+        payload: { ...data, keepSignedIn },
+      });
     } catch (error: any) {
       console.log(error.response.data);
       dispatch({

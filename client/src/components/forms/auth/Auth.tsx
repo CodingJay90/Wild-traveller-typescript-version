@@ -39,6 +39,7 @@ const Auth = () => {
   const [spinnerLoader, setSpinnerLoader] = useState(false);
   const { isLoading, isAuthenticated, error } = state;
   const [showToast, setShowToast] = useState(false);
+  const [keepSignedIn, setKeepSignedIn] = useState<boolean>(true);
 
   const [isSignin, setIsSignin] = useState<Boolean>(true);
   const navigate = useNavigate();
@@ -63,8 +64,8 @@ const Auth = () => {
 
   const handleSubmit = () => {
     setSpinnerLoader(true);
-    if (!isSignin) dispatch(registerUser({ ...values, avatar }));
-    if (isSignin) dispatch(loginUser(values));
+    if (!isSignin) dispatch(registerUser({ ...values, avatar }, keepSignedIn));
+    if (isSignin) dispatch(loginUser(values, keepSignedIn));
   };
 
   function authCallback() {
@@ -113,7 +114,12 @@ const Auth = () => {
                 onChange={onChange}
                 name="password"
               />
-              <input type="checkbox" id="remember" />
+              <input
+                type="checkbox"
+                id="remember"
+                checked={keepSignedIn}
+                onChange={() => setKeepSignedIn(!keepSignedIn)}
+              />
               <label htmlFor="remember">Keep me sign in</label>
               <button className="btn-signin">Sign In</button>
 
@@ -178,6 +184,13 @@ const Auth = () => {
                 multiple={false}
                 onDone={({ base64 }: { base64: string }) => setAvatar(base64)}
               />
+              <input
+                type="checkbox"
+                id="remember"
+                checked={keepSignedIn}
+                onChange={() => setKeepSignedIn(!keepSignedIn)}
+              />
+              <label htmlFor="remember">Keep me signed in</label>
               <button className="btn-signin">Sign Up</button>
               <a
                 href="#"

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 
-import "./Explore.css";
+import "./Explore.scss";
 import video from "../../img/video-1.mp4";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../pagination/Pagination";
@@ -17,6 +17,7 @@ import {
 import Location from "../location/Location";
 import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 import AuthModal from "../Extras/modals/authModal/AuthModal";
+import LoadingSpinner from "../Extras/LoadingSpinner";
 
 const Explore = () => {
   const dispatch = useDispatch();
@@ -55,27 +56,54 @@ const Explore = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="Explore">
-      <div className="showcase">
-        <div className="video-showcase">
-          <video src={video} muted loop autoPlay />
-          <div className="hero">
-            <h1>Explore the world of Images</h1>
-            <h2>
-              Share Your Travel experience and let people know what they think
-              about it
-            </h2>
-            <h3>Start by adding your Location</h3>
-            <button
-              className="btn btn-outline-warning"
-              onClick={navigateToCreatePage}
+    <>
+      <main className="explore">
+        <aside className="aside">
+          <div className="aside__container">
+            <button onClick={navigateToCreatePage}>Add Location</button>
+            <select
+              title="sorting"
+              name="sort"
+              className=" dropdown"
+              onChange={handleSelectChange}
             >
-              Add Location
-            </button>
+              <option value="default">Sort by</option>
+              <option value="a-z">A-Z</option>
+              <option value="z-a">Z-A</option>
+              <option value="date-created">Date Created</option>
+            </select>
+            <div>
+              <input
+                type="text"
+                value={query}
+                placeholder="Search..."
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="container">
+        </aside>
+        <section>
+          <div className="explore__container">
+            <header className="explore__header">
+              <h1>Locations</h1>
+            </header>
+          </div>
+          {!isLoading ? (
+            <div className="grid">
+              <div className="grid-container">
+                <Location item={handleFilter(currentPosts)} />
+              </div>
+            </div>
+          ) : (
+            <LoadingSpinner
+              color={"#fff"}
+              loading={isLoading}
+              loadingText="Loading. Please wait...."
+            />
+          )}
+        </section>
+      </main>
+      {/* <div className="container">
         <div className="drop-down-container">
           <select
             title="sorting"
@@ -99,11 +127,10 @@ const Explore = () => {
           </div>
         </div>
         <hr />
-      </div>
-      {!isLoading ? (
+      </div> */}
+      {/* {!isLoading ? (
         <div className="grid">
           <div className="grid-container">
-            {/* <Location item={location} /> */}
             <Location item={handleFilter(currentPosts)} />
           </div>
         </div>
@@ -123,8 +150,9 @@ const Explore = () => {
       />
       <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
 
-      <Footer />
-    </div>
+      <Footer /> */}
+      <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
+    </>
   );
 };
 

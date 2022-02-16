@@ -149,8 +149,8 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
   }
 
   const handleSubmit = () => {
-    if (!isSignUp) return dispatch(loginUser(values));
-    dispatch(registerUser(values));
+    if (!isSignUp) return dispatch(loginUser(values, true));
+    dispatch(registerUser(values, true));
   };
 
   function submitForm() {

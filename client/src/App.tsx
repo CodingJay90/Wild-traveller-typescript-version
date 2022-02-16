@@ -44,20 +44,17 @@ function App() {
             path="/details/:id/:locationName"
             element={<LocationDetailsPage />}
           />
-          <Route
-            path="/create"
-            element={
-              <ProtectedRoutes>
-                <CreateLocationPage />
-              </ProtectedRoutes>
-            }
-          />
+          <Route path="/create" element={<ProtectedRoutes />}>
+            <Route element={<CreateLocationPage />} />
+          </Route>
           <Route path="/edit/:id" element={<EditLocationPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/userProfile/:id" element={<ProfilePage />} />
-          <Route path="/dashboard" element={<UserProfilePage />} />
+          <Route path="/dashboard" element={<ProtectedRoutes />}>
+            <Route element={<UserProfilePage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

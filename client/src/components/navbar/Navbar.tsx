@@ -83,7 +83,7 @@ const Navbar = () => {
                 </NavLink>
               </div>
               <div className="navbar__group-item" onClick={logout}>
-                Log Out <FaSignOutAlt />
+                Log Out
               </div>
             </>
           )}
