@@ -9,16 +9,21 @@ import { useParams } from "react-router-dom";
 import { Store } from "../../redux/reducers";
 import { IUser } from "../../services/utils/interfaces/authInterface";
 import LoadingSpinner from "../Extras/LoadingSpinner";
+import NoContent from "../Extras/NoContent";
 
 const UserProfile = () => {
   const params = useParams();
   const user = useSelector((state: Store) => state.auth.specificUser) as IUser;
-  const isLoading = useSelector((state: Store) => state.auth.isLoading);
+  const { error, isLoading } = useSelector((state: Store) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getSpecificUser(params.id || ""));
   }, [dispatch]);
+
+  if (error) {
+    return <NoContent />;
+  }
   return (
     <React.Fragment>
       {isLoading || !user ? (
@@ -31,8 +36,8 @@ const UserProfile = () => {
         <div className="profile">
           <div className="profile__container">
             <div className="profile__header">
-              <h1>Profile</h1>
-              <h5>I'm a creative PHP webdeveloper</h5>
+              <h1>{user.username?.toUpperCase()}'s Profile</h1>
+              <h5>{user.title}</h5>
             </div>
             <div className="profile__info">
               <div className="profile__info-about">
@@ -46,8 +51,15 @@ const UserProfile = () => {
                 <h4>Details</h4>
                 <h5>Username:</h5>
                 <p>{user.username}</p>
-                <h5>Gender:</h5>
-                <p>{user.gender}</p>
+
+                {user.firstName && <h5>Name:</h5>}
+                <p>
+                  {user.firstName} {user.lastName}
+                </p>
+                {user.country && <h5>Location:</h5>}
+                <p>
+                  {user.country} {user.city}
+                </p>
               </div>
             </div>
           </div>

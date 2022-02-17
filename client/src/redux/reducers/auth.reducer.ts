@@ -64,6 +64,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         ...state,
         currentUser: action.payload,
         isAuthenticated: true,
+        error: null,
       };
     case ActionType.GET_SPECIFIC_USER:
       console.log(action.payload);
@@ -71,6 +72,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         ...state,
         specificUser: action.payload,
         isLoading: false,
+        error: null,
       };
     case ActionType.USER_LOADING:
       return {
@@ -93,7 +95,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       return {
         ...state,
         isAuthenticated: null,
-        // error: action.payload,
+        error: action.payload,
       };
 
     case ActionType.CLEAR_ERROR:
