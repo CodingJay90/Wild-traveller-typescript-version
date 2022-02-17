@@ -35,8 +35,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
       console.log(action.payload);
-      if (action.payload.keepSignedIn)
-        setCookie("auth_token", action.payload.token, 1);
+      setCookie("auth_token", action.payload.token, 1);
+      if (action.payload.keepSignedIn) setCookie("keepSignedIn", "true", 1);
       return {
         ...state,
         isAuthenticated: true,

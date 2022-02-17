@@ -24,6 +24,7 @@ const Navbar = () => {
   const logout = () => {
     // localStorage.removeItem("auth_token");
     deleteCookie("auth_token");
+    deleteCookie("keepSignedIn");
     toast.success("Logging you out", { theme: "dark" });
     setTimeout(() => {
       navigate("/");
@@ -91,93 +92,6 @@ const Navbar = () => {
       )}
     </nav>
   );
-
-  // return (
-  //   <div className="Navbar">
-  //     <nav className="navbar">
-  //       <ul className="nav-group">
-  //         <li className="nav-item brand">
-  //           <NavLink className="brand" to="/">
-  //             <FaCampground size={40} /> Wild Travelller
-  //           </NavLink>
-  //           <img
-  //             onClick={() => setMenuOpen(!menuOpen)}
-  //             src={hamburger}
-  //             width="40"
-  //             alt=""
-  //             className="menu-icon"
-  //           />
-  //         </li>
-  //       </ul>
-  //       <ul className={!menuOpen ? "nav-group" : "d-none nav-group"}>
-  //         <li className="nav-item">
-  //           <NavLink to="/">
-  //             <span>
-  //               <FaHome />
-  //             </span>
-  //             Home
-  //           </NavLink>
-  //         </li>
-  //         <li className="nav-item">
-  //           <NavLink to="/contact">
-  //             <span>
-  //               <FaAddressCard />
-  //             </span>
-  //             Contact
-  //           </NavLink>
-  //         </li>
-  //       </ul>
-  //       {!token ? (
-  //         <ul className={!menuOpen ? "nav-group" : "d-none nav-group"}>
-  //           <li className="nav-item">
-  //             <NavLink to="/signup">SignUp</NavLink>
-  //           </li>
-  //           <li className="nav-item">
-  //             <NavLink to="/login">Login</NavLink>
-  //           </li>
-  //         </ul>
-  //       ) : (
-  //         <ul className={!menuOpen ? "nav-group" : "d-none nav-group"}>
-  //           {currentUser && (
-  //             <>
-  //               <li className="nav-item">
-  //                 <NavLink to="/dashboard">{currentUser.username}</NavLink>
-  //               </li>
-  //               <li className="nav-item">
-  //                 <NavLink to="/dashboard">
-  //                   <img
-  //                     src={
-  //                       currentUser.avatar ||
-  //                       "https://img2.pngio.com/default-avatar-port-perry-hospital-foundation-gravatar-png-1600_1600.png"
-  //                     }
-  //                     alt=""
-  //                   />
-  //                 </NavLink>
-  //               </li>
-
-  //               <li className="nav-item" onClick={logout}>
-  //                 Log Out <FaSignOutAlt />
-  //               </li>
-  //             </>
-  //           )}
-  //         </ul>
-  //       )}
-
-  //       {/* <ToastContainer
-  //         position="top-right"
-  //         autoClose={5000}
-  //         hideProgressBar={false}
-  //         newestOnTop={false}
-  //         closeOnClick
-  //         rtl={false}
-  //         pauseOnFocusLoss
-  //         draggable
-  //         bodyClassName="white"
-  //         progressClassName="Toastify__progress-bar--dark"
-  //       /> */}
-  //     </nav>
-  //   </div>
-  // );
 };
 
 export default Navbar;

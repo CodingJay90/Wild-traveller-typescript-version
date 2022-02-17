@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Footer from "../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
-import "./Profile.css";
+import "./Profile.scss";
 import { useNavigate } from "react-router-dom";
 import { Store } from "../../redux/reducers";
 import {
@@ -17,8 +17,6 @@ const Dashboard = () => {
   const { specificUser, currentUser, isLoading } = useSelector(
     (state: Store) => state.auth
   );
-  // const currentUser = useSelector((state: Store) => state.auth.currentUser);
-  // const isLoading = useSelector((state: Store) => state.auth.isLoading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState<string>(specificUser?.avatar || "");
@@ -58,7 +56,7 @@ const Dashboard = () => {
     navigate("/explore");
   };
 
-  // console.log(currentUser);
+  console.log(currentUser);
 
   return (
     <React.Fragment>

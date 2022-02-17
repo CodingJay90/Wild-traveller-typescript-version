@@ -49,6 +49,8 @@
       width: 100%;
       border-bottom: 1px solid rgba(3, 3, 3, 0.096);
       padding: 1rem;
+      transition: 0.1s linear;
+      font-weight: 300;
 
       &:hover {
         background-color: rgba(48, 49, 49, 0.233);
@@ -59,7 +61,6 @@
       }
       @include laptopBreakpoint {
         padding: 1rem;
-        font-weight: 600;
         font-size: 1.2em;
         cursor: pointer;
         text-align: center;
@@ -73,6 +74,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: 300;
+        cursor: pointer;
       }
 
       span {
@@ -142,10 +145,10 @@
   border: none;
   display: flex;
   justify-content: space-between;
-  &:hover {
-    background-color: #fff;
-    cursor: default;
-  }
+  // &:hover {
+  //   background-color: #fff;
+  //   cursor: default;
+  // }
   @include laptopBreakpoint {
     color: #111;
     font-size: 1.5em;

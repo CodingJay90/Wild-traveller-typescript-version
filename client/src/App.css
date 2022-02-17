@@ -2,16 +2,16 @@ a {
   text-decoration: none;
 }
 
-.btn {
+/* .btn {
   padding: 1.1rem;
   color: #fff;
   border-radius: 4px;
-}
-
+} */
+/* 
 .btn-secondary {
   color: #fff;
   background: silver;
-}
+} */
 
 .btn-outline-secondary {
   background: #fff;
@@ -20,13 +20,14 @@ a {
   border: 2px solid;
   border-image-source: linear-gradient(to right, #3f33e7, #15d8f1);
   border-image-slice: 1;
+  border: 1px solid #fff;
 }
 
 .btn-outline-secondary:hover {
   background: rgb(131, 131, 131);
   color: #fff;
 }
-
+/* 
 .btn-outline-warning {
   background: transparent;
   border: 2px solid gold;
@@ -52,8 +53,7 @@ a {
 .btn-default {
   cursor: pointer;
   color: #111;
-  /* display: block; */
   background: linear-gradient(to right, gold, rgb(233, 205, 50));
   border: none;
   margin: 0 auto;
-}
+} */

@@ -59,6 +59,7 @@ const Auth = () => {
   useEffect(() => {
     return () => {
       dispatch(clearError());
+      setSpinnerLoader(false);
     };
   }, []);
 

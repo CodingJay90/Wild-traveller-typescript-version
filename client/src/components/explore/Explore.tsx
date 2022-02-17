@@ -55,6 +55,12 @@ const Explore = () => {
   //Change Page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  useEffect(() => {
+    return () => {
+      console.log(":logging off");
+    };
+  }, []);
+
   return (
     <>
       <main className="explore">

@@ -19,7 +19,7 @@ import { AuthState } from "./redux/reducers/auth.reducer";
 import FreakingComponent from "./FreakingComponent";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import AuthModal from "./components/Extras/modals/authModal/AuthModal";
-import { getCookie } from "./services/utils/cookiesFunctions";
+import { deleteCookie, getCookie } from "./services/utils/cookiesFunctions";
 import Test from "./Test";
 import { checkTokenExpiration } from "./services/utils/auth";
 
@@ -30,6 +30,9 @@ function App() {
     console.log(checkTokenExpiration(authToken));
     if (!checkTokenExpiration(authToken)) dispatch(loadUser());
     dispatch(getLocations());
+    // console.log(getCookie("keepSignedIn"));
+    // if (getCookie("keepSignedIn") === "true") return;
+    // deleteCookie("keepSignedIn");
     // if (authToken) dispatch(loadUser());
   }, [dispatch]);
 
@@ -44,17 +47,28 @@ function App() {
             path="/details/:id/:locationName"
             element={<LocationDetailsPage />}
           />
-          <Route path="/create" element={<ProtectedRoutes />}>
-            <Route element={<CreateLocationPage />} />
-          </Route>
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoutes>
+                <CreateLocationPage />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/edit/:id" element={<EditLocationPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/userProfile/:id" element={<ProfilePage />} />
-          <Route path="/dashboard" element={<ProtectedRoutes />}>
-            <Route element={<UserProfilePage />} />
-          </Route>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutes>
+                <UserProfilePage />
+              </ProtectedRoutes>
+            }
+          />
+          {/* <Route path="/dashboard" element={<ProtectedRoutes> <UserProfilePage /> </ProtectedRoutes>} /> */}
         </Routes>
       </BrowserRouter>
     </>
