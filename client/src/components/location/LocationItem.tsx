@@ -9,14 +9,14 @@ export interface LocationProps {
   item: ILocation;
 }
 
-const LocationItem: FC<LocationProps> = ({ item }) => {
-  const { location, image, description, _id, createdAt, author } = item;
-  console.log(item, "item");
+const LocationItem: FC<LocationProps> = ({
+  item: { location, image, description, _id, createdAt, author },
+}) => {
   return (
     <>
       <div className="card">
         <div className="card-header">
-          <Link to={`/details/${_id}/${location}`} state={item}>
+          <Link to={`/details/${_id}/${location}`}>
             <img src={image} alt={location} />
           </Link>
         </div>
@@ -38,7 +38,13 @@ const LocationItem: FC<LocationProps> = ({ item }) => {
               />
             </Link>
             <div className="user-info">
-              <h5>{author.username}</h5>
+              <Link
+                to={{
+                  pathname: `/userProfile/${author.id}`,
+                }}
+              >
+                <h5>{author.username}</h5>
+              </Link>
               <small>{moment(createdAt).fromNow()}</small>
             </div>
           </div>

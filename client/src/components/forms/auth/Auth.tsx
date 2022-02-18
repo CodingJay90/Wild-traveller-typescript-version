@@ -46,6 +46,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (error?.errorMessages.length) {
+      console.log(error, "error");
       setSpinnerLoader(isLoading);
       setShowToast(true);
     }
@@ -86,21 +87,6 @@ const Auth = () => {
           <div className="login " ref={signinRef}>
             <div className="title">
               <span>Sign In</span>
-              <p>
-                Welcome back, please login to your account. You can login with
-                facebook, twitter or by your regular user login.
-              </p>
-            </div>
-            <div>
-              <a href="#" className="btn-face">
-                <i className="fa fa-facebook" aria-hidden="true"></i> Facebook
-              </a>
-              <a href="#" className="btn-twitter">
-                <i className="fa fa-twitter" aria-hidden="true"></i> Twitter
-              </a>
-            </div>
-            <div className="or">
-              <span>OR</span>
             </div>
             <form onSubmit={onSubmit}>
               <input
@@ -124,10 +110,10 @@ const Auth = () => {
               <label htmlFor="remember">Keep me sign in</label>
               <button className="btn-signin">Sign In</button>
 
-              <a href="#" className="btn-reset btn-fade">
+              {/* <a href="#" className="btn-reset btn-fade">
                 Recover your password{" "}
                 <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </a>
+              </a> */}
               <a
                 href="#"
                 className="btn-member btn-fade"
@@ -142,23 +128,6 @@ const Auth = () => {
           <div className="signup d-none" ref={signupRef}>
             <div className="title">
               <span>Sign Up</span>
-              <p>
-                Create a new account. You can sign up with your facebook or
-                twitter accunt. Or your regular user login.
-              </p>
-            </div>
-
-            <div>
-              <a href="#" className="btn-face">
-                <i className="fa fa-facebook" aria-hidden="true"></i> Facebook
-              </a>
-              <a href="#" className="btn-twitter">
-                <i className="fa fa-twitter" aria-hidden="true"></i> Twitter
-              </a>
-            </div>
-
-            <div className="or">
-              <span>OR</span>
             </div>
 
             <form onSubmit={handleSubmit}>

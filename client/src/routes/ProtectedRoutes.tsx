@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import AuthModal from "../components/Extras/modals/authModal/AuthModal";
 import { Store } from "../redux/reducers";
+import { getCookie } from "../services/utils/cookiesFunctions";
 interface Props {
   children: JSX.Element;
 }
@@ -13,8 +14,9 @@ interface Props {
 // };
 const ProtectedRoutes: FC<{ children: JSX.Element }> = ({ children }) => {
   const { isAuthenticated } = useSelector((state: Store) => state.auth);
+  const token = getCookie("auth_token");
   console.log(isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return getCookie("auth_token") ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoutes;

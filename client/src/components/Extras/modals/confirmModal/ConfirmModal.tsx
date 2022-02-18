@@ -13,7 +13,7 @@ const ConfirmModal = ({ message, callback }: IProps) => {
     callback();
   };
   return (
-    <div>
+    <div className="confirm__modal">
       <div className="wrap">
         <div className="overlay" id="show">
           <div id="myModal" className="modal fade">

@@ -11,6 +11,7 @@ import Footer from "../footer/Footer";
 import { FaSpinner } from "react-icons/fa";
 import { Store } from "../../redux/reducers";
 import {
+  getLocations,
   sortLocation,
   sortLocationByDateCreated,
 } from "../../redux/action-creators/location.action";
@@ -18,13 +19,13 @@ import Location from "../location/Location";
 import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 import AuthModal from "../Extras/modals/authModal/AuthModal";
 import LoadingSpinner from "../Extras/LoadingSpinner";
+import { clearError } from "../../redux/action-creators/auth.action";
 
 const Explore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const state = useSelector((state: Store) => state.location);
+  const { location, isLoading } = useSelector((state: Store) => state.location);
   const { token } = useSelector((state: Store) => state.auth);
-  const { location, isLoading } = state;
   const [query, setQuery] = useState<string>("");
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const navigateToCreatePage = (): void => {
@@ -56,8 +57,11 @@ const Explore = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
+    console.log(isLoading, "isloading");
+    dispatch(getLocations());
     return () => {
-      console.log(":logging off");
+      dispatch(clearError());
+      console.log(":unmounting component");
     };
   }, []);
 
@@ -94,18 +98,19 @@ const Explore = () => {
               <h1>Locations</h1>
             </header>
           </div>
-          {!isLoading ? (
+          {isLoading ? (
+            // <LoadingSpinner
+            //   color={"#fff"}
+            //   loading={true}
+            //   loadingText="Loading. Please wait...."
+            // />
+            <h1>Loading</h1>
+          ) : (
             <div className="grid">
               <div className="grid-container">
                 <Location item={handleFilter(currentPosts)} />
               </div>
             </div>
-          ) : (
-            <LoadingSpinner
-              color={"#fff"}
-              loading={isLoading}
-              loadingText="Loading. Please wait...."
-            />
           )}
         </section>
       </main>
@@ -158,6 +163,7 @@ const Explore = () => {
 
       <Footer /> */}
       <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
+      {/* <Footer /> */}
     </>
   );
 };

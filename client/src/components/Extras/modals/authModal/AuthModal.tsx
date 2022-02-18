@@ -8,6 +8,7 @@ import "rodal/lib/rodal.css";
 import { useForm } from "../../../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearError,
   loginUser,
   registerUser,
 } from "../../../../redux/action-creators/auth.action";
@@ -117,6 +118,7 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
   function inUpClick(): void {
     setIsSignup(!isSignUp);
     animateFields("signupInputs");
+    dispatch(clearError());
     setTimeout(() => {
       animateFields("loginInputs");
     });
@@ -159,7 +161,13 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
 
   return (
     <div className="auth__modal">
-      <Rodal visible={visible} onClose={() => setVisible(false)}>
+      <Rodal
+        visible={visible}
+        onClose={() => {
+          dispatch(clearError());
+          setVisible(false);
+        }}
+      >
         <div>
           <Login
             isSignUp={isSignUp}

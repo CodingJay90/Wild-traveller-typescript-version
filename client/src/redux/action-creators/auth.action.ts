@@ -97,6 +97,7 @@ export const getSpecificUser =
   };
 
 export const clearError = () => (dispatch: Dispatch) => {
+  console.log("gg");
   dispatch({
     type: ActionType.CLEAR_ERROR,
   });

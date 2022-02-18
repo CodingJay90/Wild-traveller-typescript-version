@@ -34,12 +34,7 @@ export const checkTokenExpiration = (token: string) => {
   }
 };
 
-export const checkLogin = () => {
-  const token: string = getCookie("auth_token");
+export const checkLogin = (token: string) => {
+  // const token: string = getCookie("auth_token");
   return !!token && !checkTokenExpiration(token);
 };
-
-// export const getUser = async (token: string) => {
-//   let res = await getApi(`${BASE_API_URL}/user`, token);
-//   return res.user;
-// };

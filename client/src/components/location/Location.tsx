@@ -10,7 +10,7 @@ interface IProps {
 const Location = ({ item }: IProps) => {
   return (
     <>
-      <div className="container">
+      <div className="grid">
         {item.map((i) => {
           return <LocationItem key={i._id} item={i} />;
         })}
