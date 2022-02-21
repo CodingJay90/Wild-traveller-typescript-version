@@ -16,6 +16,7 @@ import {
 import { ILocation } from "../../services/utils/interfaces/LocationInterface";
 import NoContent from "../Extras/NoContent";
 import CreateCommentForm from "../forms/commentForm/CommentForm";
+import ConfirmModal from "../Extras/modals/confirmModal/ConfirmModal";
 
 interface IParams {
   id?: string;
@@ -42,8 +43,8 @@ const LocationDetails = () => {
     new Array(length).fill(false)
   );
 
-  const onDeleteLocation = (id: string) => {
-    dispatch(deleteLocation(id));
+  const onDeleteLocation = (): void => {
+    dispatch(deleteLocation(currentLocation?._id || ""));
     navigate("/explore");
   };
 
@@ -72,14 +73,37 @@ const LocationDetails = () => {
             <h2>{currentLocation?.location}</h2>
             <p>{currentLocation?.description}</p>
             <div className="card__footer">
-              <p>Created By : {currentLocation?.author.username}</p>
-              <p>Created: {moment(currentLocation?.createdAt).fromNow()}</p>
-            </div>
-            {/* <p>
-              <a href="#top" className="btn btn--accent">
+              <div className="card__footer-details">
+                <p>Created By : {currentLocation?.author.username}</p>
+                <p>Created: {moment(currentLocation?.createdAt).fromNow()}</p>
+              </div>
+              {/* <a href="#top" className="btn btn--accent">
                 Read more
-              </a>
-            </p> */}
+              </a> */}
+              {currentUser &&
+              currentUser?._id === currentLocation?.author.id ? (
+                <>
+                  {!toggle && (
+                    <div className="card__footer-btn">
+                      <Link
+                        to={`/edit/${currentLocation?._id}`}
+                        state={locationProp}
+                        className={toggle ? "btn btn--accent" : "none"}
+                      >
+                        Edit
+                      </Link>
+                      <a
+                        href="#show"
+                        data-toggle="modal"
+                        className={toggle ? "btn btn--accent" : "none"}
+                      >
+                        Delete
+                      </a>
+                    </div>
+                  )}
+                </>
+              ) : null}
+            </div>
           </div>
           <figure>
             <img src={currentLocation?.image} alt="Image description" />
@@ -90,7 +114,6 @@ const LocationDetails = () => {
       <div>
         <ol className="timeline">
           <CreateCommentForm
-            // item={currentLocation}
             populateForm={populateForm}
             comment_id={comment_id || ""}
             location_id={params.id || ""}
@@ -101,7 +124,7 @@ const LocationDetails = () => {
             currentLocation?.comment.map((data, index) => {
               console.log(data);
               return (
-                <li className="timeline-item | extra-space">
+                <li key={data._id} className="timeline-item | extra-space">
                   <span className="timeline-item-icon | filled-icon">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +222,7 @@ const LocationDetails = () => {
               <FaSpinner size={50} className="App-logo-spin App-logo" />
             </div>
           )}
-          <button className="show-replies">
+          {/* <button className="show-replies">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler icon-tabler-arrow-forward"
@@ -216,19 +239,13 @@ const LocationDetails = () => {
               <path d="M15 11l4 4l-4 4m4 -4h-11a4 4 0 0 1 0 -8h1" />
             </svg>
             Show 3 replies
-          </button>
+          </button> */}
         </ol>
       </div>
-
-      {/* 
-      <CreateCommentForm
-        // item={currentLocation}
-        populateForm={populateForm}
-        comment_id={comment_id || ""}
-        location_id={params.id || ""}
-        commentUpdateText={commentUpdateText}
-        setPopulateForm={setPopulateForm}
-      /> */}
+      <ConfirmModal
+        message="This process cannot be undone."
+        callback={onDeleteLocation}
+      />
     </div>
   );
 };

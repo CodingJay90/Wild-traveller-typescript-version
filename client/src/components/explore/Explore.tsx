@@ -112,9 +112,14 @@ const Explore = () => {
             </div>
           )}
         </section>
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={location.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+        <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
       </main>
-     
-      <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
     </>
   );
 };

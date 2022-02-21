@@ -59,6 +59,7 @@
   margin-left: 4.7rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 1000px) {
@@ -117,6 +118,6 @@
 }
 @media screen and (min-width: 1238px) {
   .explore .grid {
-    margin-left: 4rem;
+    margin-left: 0;
   }
 }

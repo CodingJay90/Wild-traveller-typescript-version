@@ -72,9 +72,7 @@ const reducer = (
         specificComment: action.payload,
       };
     case CommentTypes.ADD_COMMENT:
-      const foundLocation = state.location.find(
-        (i) => i._id === action.payload.location_id
-      );
+      const foundLocation = state.specificLocation;
       foundLocation?.comment.push(action.payload.comment);
       return {
         ...state,
