@@ -27,4 +27,5 @@ export interface IComment {
   text: string;
   avatar: string;
   _id: string;
+  createdAt: string;
 }

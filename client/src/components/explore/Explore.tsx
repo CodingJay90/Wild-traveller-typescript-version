@@ -99,12 +99,11 @@ const Explore = () => {
             </header>
           </div>
           {isLoading ? (
-            // <LoadingSpinner
-            //   color={"#fff"}
-            //   loading={true}
-            //   loadingText="Loading. Please wait...."
-            // />
-            <h1>Loading</h1>
+            <LoadingSpinner
+              color={"#fff"}
+              loading={true}
+              loadingText="Loading. Please wait...."
+            />
           ) : (
             <div className="grid">
               <div className="grid-container">
@@ -114,56 +113,8 @@ const Explore = () => {
           )}
         </section>
       </main>
-      {/* <div className="container">
-        <div className="drop-down-container">
-          <select
-            title="sorting"
-            name="sort"
-            className=" dropdown"
-            onChange={handleSelectChange}
-          >
-            <option value="default">Sort by</option>
-            <option value="a-z">A-Z</option>
-            <option value="z-a">Z-A</option>
-            <option value="date-created">Date Created</option>
-          </select>
-          <h2>Locations</h2>
-          <div className=" input">
-            <input
-              type="text"
-              value={query}
-              placeholder="Search..."
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
-        </div>
-        <hr />
-      </div> */}
-      {/* {!isLoading ? (
-        <div className="grid">
-          <div className="grid-container">
-            <Location item={handleFilter(currentPosts)} />
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{ margin: "4rem auto", textAlign: "center", display: "block" }}
-        >
-          <h1>Loading....</h1>
-          <FaSpinner size={50} className="App-logo-spin App-logo" />
-        </div>
-      )}
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={location.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+     
       <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
-
-      <Footer /> */}
-      <AuthModal visible={showAuthModal} setVisible={setShowAuthModal} />
-      {/* <Footer /> */}
     </>
   );
 };

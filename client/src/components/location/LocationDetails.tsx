@@ -3,7 +3,7 @@ import { FaCaretDown, FaEllipsisV, FaSpinner } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
-import "./LocationDetails.css";
+import "./LocationDetails.scss";
 // import CreateCommentForm from "../forms/commentForm/CreateCommentForm";
 import { Store } from "../../redux/reducers";
 import { LocationProps } from "./LocationItem";
@@ -66,139 +66,161 @@ const LocationDetails = () => {
 
   return (
     <div className="LocationDetails">
-      {/* {error && <NoContent />} */}
-      <div className="container">
-        <div className="img-container">
-          <img src={currentLocation?.image} alt="" />
-          {currentUser && currentUser?._id == currentLocation?.author.id && (
-            <span className="btn-controller">
-              <FaCaretDown size={52} onClick={() => setToggle(!toggle)} />{" "}
-            </span>
-          )}
-
-          {currentUser && currentUser?._id === currentLocation?.author.id ? (
-            <span className="options">
-              {toggle && (
-                <span className="button">
-                  <Link
-                    to={`/edit/${currentLocation?._id}`}
-                    state={locationProp}
-                    className={toggle ? "btn btn-default" : "none"}
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className={toggle ? "btn btn-danger" : "none"}
-                    onClick={() => onDeleteLocation(currentLocation?._id || "")}
-                    // to="#"
-                  >
-                    Delete
-                  </button>
-                </span>
-              )}
-            </span>
-          ) : null}
-        </div>
-        <div className="details">
-          <h1>Name : {currentLocation?.location}</h1>
-          <h3>Description : {currentLocation?.description}</h3>
-          <h4>Created By : {currentLocation?.author.username}</h4>
-          <p>Created: {moment(currentLocation?.createdAt).fromNow()}</p>
+      <div className="card" id="card_1">
+        <div className="card__content">
+          <div className="card__details">
+            <h2>{currentLocation?.location}</h2>
+            <p>{currentLocation?.description}</p>
+            <div className="card__footer">
+              <p>Created By : {currentLocation?.author.username}</p>
+              <p>Created: {moment(currentLocation?.createdAt).fromNow()}</p>
+            </div>
+            {/* <p>
+              <a href="#top" className="btn btn--accent">
+                Read more
+              </a>
+            </p> */}
+          </div>
+          <figure>
+            <img src={currentLocation?.image} alt="Image description" />
+          </figure>
         </div>
       </div>
 
-      <h2>Comments</h2>
-      <hr className="sep-2" />
-
-      {!isLoading && currentLocation?.comment ? (
-        currentLocation?.comment.map((data, index) => {
-          return (
-            <div className="comment-container" key={data._id}>
-              <div className="comment">
-                <div className="avatar">
-                  {data.avatar ? (
-                    <img src={data.avatar} alt="" />
-                  ) : (
-                    <img
-                      src="https://img2.pngio.com/default-avatar-port-perry-hospital-foundation-gravatar-png-1600_1600.png"
-                      alt=""
-                    />
-                  )}
-                </div>
-                <div className="text">
-                  <div className="comment-content">
-                    <h4>
-                      <Link
-                        style={{ color: "blue" }}
-                        to={{
-                          pathname: `/userProfile/${data.author.id}`,
-                        }}
-                        // state: { data }
-                      >
-                        {data.author.username}{" "}
-                      </Link>
-                      {currentUser &&
-                        currentUser._id === data.author.id &&
-                        "(You)"}{" "}
-                    </h4>
-                    <p>{data.text}</p>
-                    <div className="comment-btn">
-                      {currentUser &&
-                      toggleArray[index] &&
-                      currentUser._id === data.author.id ? (
-                        <span className="button">
-                          <button
-                            className={
-                              toggleArray[index] ? "comment-btn" : "none"
-                            }
-                            onClick={() => {
-                              setPopulateForm(true);
-                              setCommentUpdateText(data.text);
-                              setCommentId(data._id);
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className={
-                              toggleArray[index] ? "comment-btn" : "none"
-                            }
-                            onClick={() => {
-                              dispatch(
-                                deleteComment(currentLocation?._id, data._id)
-                              );
-                              // window.location.reload();
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </span>
-                      ) : null}
+      <div>
+        <ol className="timeline">
+          <CreateCommentForm
+            // item={currentLocation}
+            populateForm={populateForm}
+            comment_id={comment_id || ""}
+            location_id={params.id || ""}
+            commentUpdateText={commentUpdateText}
+            setPopulateForm={setPopulateForm}
+          />
+          {!isLoading && currentLocation?.comment ? (
+            currentLocation?.comment.map((data, index) => {
+              console.log(data);
+              return (
+                <li className="timeline-item | extra-space">
+                  <span className="timeline-item-icon | filled-icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path
+                        fill="currentColor"
+                        d="M6.455 19L2 22.5V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6.455zM7 10v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"
+                      />
+                    </svg>
+                  </span>
+                  <div className="timeline-item-wrapper">
+                    <div className="timeline-item-description">
+                      <i className="avatar | small">
+                        {data.avatar ? (
+                          <img src={data.avatar} alt="" />
+                        ) : (
+                          <img
+                            src="https://img2.pngio.com/default-avatar-port-perry-hospital-foundation-gravatar-png-1600_1600.png"
+                            alt="avaar"
+                          />
+                        )}
+                      </i>
+                      <span>
+                        <Link
+                          to={{
+                            pathname: `/userProfile/${data.author.id}`,
+                          }}
+                        >
+                          {data.author.username}{" "}
+                        </Link>
+                        posted a comment on{" "}
+                        <time dateTime="20-01-2021">
+                          {moment(data?.createdAt).format("lll")}
+                        </time>
+                      </span>
+                    </div>
+                    <div className="comment">
+                      <div className="comment__btn">
+                        {currentUser && currentUser._id === data.author.id ? (
+                          <FaEllipsisV
+                            className="options-btn"
+                            onClick={() => toggleCommentOptions(index)}
+                          />
+                        ) : null}
+                        {currentUser &&
+                        toggleArray[index] &&
+                        currentUser._id === data.author.id ? (
+                          <span className="comment__btn-options">
+                            <button
+                              className={
+                                toggleArray[index] ? "comment-btn" : "none"
+                              }
+                              onClick={() => {
+                                setPopulateForm(true);
+                                setCommentUpdateText(data.text);
+                                setCommentId(data._id);
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className={
+                                toggleArray[index] ? "comment-btn" : "none"
+                              }
+                              onClick={() => {
+                                dispatch(
+                                  deleteComment(currentLocation?._id, data._id)
+                                );
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </span>
+                        ) : null}
+                      </div>
+                      <p>{data.text}</p>
                     </div>
                   </div>
-                  {
-                    /* {compare comment author } */
-                    currentUser && currentUser._id === data.author.id ? (
-                      <FaEllipsisV
-                        className="options-btn"
-                        onClick={() => toggleCommentOptions(index)}
-                      />
-                    ) : null
-                  }
-                </div>
-              </div>
+                </li>
+              );
+            })
+          ) : (
+            <div
+              style={{
+                margin: "4rem auto",
+                textAlign: "center",
+                display: "block",
+              }}
+            >
+              <h1>Loading Comments....</h1>
+              <FaSpinner size={50} className="App-logo-spin App-logo" />
             </div>
-          );
-        })
-      ) : (
-        <div
-          style={{ margin: "4rem auto", textAlign: "center", display: "block" }}
-        >
-          <h1>Loading Comments....</h1>
-          <FaSpinner size={50} className="App-logo-spin App-logo" />
-        </div>
-      )}
+          )}
+          <button className="show-replies">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon icon-tabler icon-tabler-arrow-forward"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 11l4 4l-4 4m4 -4h-11a4 4 0 0 1 0 -8h1" />
+            </svg>
+            Show 3 replies
+          </button>
+        </ol>
+      </div>
 
+      {/* 
       <CreateCommentForm
         // item={currentLocation}
         populateForm={populateForm}
@@ -206,7 +228,7 @@ const LocationDetails = () => {
         location_id={params.id || ""}
         commentUpdateText={commentUpdateText}
         setPopulateForm={setPopulateForm}
-      />
+      /> */}
     </div>
   );
 };
