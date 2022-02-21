@@ -1,0 +1,60 @@
+@import "../../styles/partials/mixins";
+.home {
+  margin-top: 8vh;
+  overflow: hidden;
+  &__hero {
+    height: 100vh;
+    background: url(https://wallpapercave.com/wp/wp2742508.jpg);
+
+    &-overlay {
+      background: rgba(0, 0, 0, 0.767);
+      height: 100vh;
+    }
+
+    &-content {
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      margin: auto;
+    }
+    &-heading {
+      line-height: 2;
+      color: #fff;
+      text-align: center;
+      font-size: 4rem;
+      margin-top: -4rem;
+    }
+    a {
+      width: fit-content;
+      margin-top: 2rem;
+    }
+  }
+
+  &__explore {
+    width: 90%;
+    margin: auto;
+    &-header {
+      text-align: center;
+      font-size: 2.4rem;
+      text-transform: capitalize;
+    }
+    &__group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &-item {
+        line-height: 2;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .Home .section {
+    display: block;
+  }
+}

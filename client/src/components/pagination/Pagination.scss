@@ -1,0 +1,23 @@
+@import "../../styles/partials/_variables";
+@import "../../styles/partials/_mixins";
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+
+  &__container {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item {
+    a {
+      color: $primary-color-md;
+      padding: 1.2rem;
+      margin: 0 0.4rem;
+    }
+  }
+}
