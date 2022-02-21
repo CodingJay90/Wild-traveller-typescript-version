@@ -31,7 +31,6 @@ const getSpecificComment = async (req: Request, res: Response) => {
     res.status(200).json({ success: true, foundComment });
   } catch (err: any) {
     res.status(400).json({ success: false, message: err.message });
-    console.log(err);
   }
 };
 
@@ -45,7 +44,6 @@ const updateComment = async (req: Request, res: Response) => {
     res.status(200).json({ success: true, updatedComment });
   } catch (error: any) {
     res.status(400).json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 
@@ -60,7 +58,6 @@ const deleteComment = async (req: Request, res: Response) => {
       );
   } catch (error: any) {
     res.status(400).json(error.message);
-    console.log(error);
   }
 };
 

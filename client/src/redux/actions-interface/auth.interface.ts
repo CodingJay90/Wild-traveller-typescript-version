@@ -1,10 +1,11 @@
-import { IUser } from "../../utils/authInterface";
+import { IUser } from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 
 interface AuthPayload extends IUser {
   user: IUser;
   token: string;
   success: boolean;
+  keepSignedIn: boolean;
 }
 
 interface RegisterAction {

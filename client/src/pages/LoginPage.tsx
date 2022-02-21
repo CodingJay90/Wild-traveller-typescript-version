@@ -4,7 +4,7 @@ import Auth from "../components/forms/auth/Auth";
 const LoginPage = () => {
   return (
     <section>
-      <Auth type="signin" />
+      <Auth />
     </section>
   );
 };

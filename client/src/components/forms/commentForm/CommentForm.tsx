@@ -6,7 +6,7 @@ import {
   updateComment,
 } from "../../../redux/action-creators/location.action";
 import { Store } from "../../../redux/reducers";
-import { ILocation } from "../../../utils/LocationInterface";
+import { ILocation } from "../../../services/utils/interfaces/LocationInterface";
 
 interface IProps {
   setPopulateForm(val: boolean): void;
@@ -17,7 +17,6 @@ interface IProps {
 }
 
 const CreateCommentForm: FC<IProps> = ({
-  //   item: { _id },
   populateForm,
   comment_id,
   location_id,
@@ -44,26 +43,17 @@ const CreateCommentForm: FC<IProps> = ({
   };
 
   useEffect(() => {
-    // if (comment_id) dispatch(getSpecificComment(location_id, comment_id));
-    // if (populateForm) setUpdateText(specificComment.text);
     if (populateForm) setText(commentUpdateText);
   }, [populateForm, location_id, comment_id]);
 
   return (
-    <div className="comment-input">
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-          placeholder="Add comment"
-        />
-        <button disabled={!text} className="btn btn-warning">
-          {populateForm ? "Update Comment" : "Enter"}
-        </button>
-      </form>
-
-      {/* {!populateForm ? (
+    <li className="timeline-item">
+      <span className="timeline-item-icon | avatar-icon">
+        <i className="avatar">
+          <img src="https://assets.codepen.io/285131/hat-man.png" />
+        </i>
+      </span>
+      <div className="new-comment">
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -71,20 +61,9 @@ const CreateCommentForm: FC<IProps> = ({
             value={text}
             placeholder="Add comment"
           />
-          <button className="btn btn-warning">Enter</button>
         </form>
-      ) : (
-        <form onSubmit={onUpdate}>
-          <input
-            type="text"
-            placeholder="add comment"
-            onChange={(e) => setUpdateText(e.target.value)}
-            value={updateText}
-          />
-          <button className="btn btn-warning">Update Comment</button>
-        </form>
-      )} */}
-    </div>
+      </div>
+    </li>
   );
 };
 

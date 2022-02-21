@@ -6,15 +6,18 @@ import {
   loginUserApi,
   registerUserApi,
   updateUserApi,
-} from "../../api/auth.api";
-import { IUser, IUserForm } from "../../utils/authInterface";
+} from "../../services/api/auth.api";
+import {
+  IUser,
+  IUserForm,
+} from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
 export const registerUser =
-  (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
+  (userDetails: IUser, keepSignedIn: boolean) =>
+  async (dispatch: Dispatch<AuthAction>) => {
     try {
-      console.log(userDetails);
       dispatch({ type: ActionType.USER_LOADING });
       const { data } = await registerUserApi("users/", userDetails);
       dispatch({ type: ActionType.REGISTER_USER, payload: data });
@@ -28,13 +31,15 @@ export const registerUser =
   };
 
 export const loginUser =
-  (userDetails: IUser) => async (dispatch: Dispatch<AuthAction>) => {
+  (userDetails: IUser, keepSignedIn: boolean) =>
+  async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await loginUserApi("sessions/", userDetails);
-      console.log(data);
-      dispatch({ type: ActionType.LOGIN_USER, payload: data });
+      dispatch({
+        type: ActionType.LOGIN_USER,
+        payload: { ...data, keepSignedIn },
+      });
     } catch (error: any) {
-      console.log(error.response.data);
       dispatch({
         type: ActionType.LOGIN_USER_FAIL,
         payload: error.response.data,
@@ -73,11 +78,15 @@ export const loadUser = () => async (dispatch: Dispatch<AuthAction>) => {
 export const getSpecificUser =
   (id: string) => async (dispatch: Dispatch<AuthAction>) => {
     try {
+      dispatch({ type: ActionType.USER_LOADING });
       const { data } = await getSpecificUserApi(`sessions/${id}`);
-      console.log(data);
-      dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: data.foundUser });
+      const userData = {
+        ...data.user,
+        comments: data.comments,
+        locations: data.locations,
+      };
+      dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: userData });
     } catch (error: any) {
-      console.log(error.response);
       dispatch({ type: ActionType.USER_LOADED_FAIL, payload: error });
     }
   };

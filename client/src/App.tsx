@@ -17,13 +17,18 @@ import { getSpecificUser, loadUser } from "./redux/action-creators/auth.action";
 import { getLocations } from "./redux/action-creators/location.action";
 import { AuthState } from "./redux/reducers/auth.reducer";
 import FreakingComponent from "./FreakingComponent";
+import ProtectedRoutes from "./routes/ProtectedRoutes";
+import AuthModal from "./components/Extras/modals/authModal/AuthModal";
+import { deleteCookie, getCookie } from "./services/utils/cookiesFunctions";
+import { checkLogin, checkTokenExpiration } from "./services/utils/auth";
+import { Store } from "./redux/reducers";
 
 function App() {
+  const { token } = useSelector((state: Store) => state.auth);
   const dispatch = useDispatch();
-  const authToken = localStorage.getItem("auth_token");
+  const authToken = getCookie("auth_token");
   useEffect(() => {
-    if (authToken) dispatch(loadUser());
-    dispatch(getLocations());
+    if (checkLogin(token || "")) dispatch(loadUser());
   }, [dispatch]);
 
   return (
@@ -37,16 +42,30 @@ function App() {
             path="/details/:id/:locationName"
             element={<LocationDetailsPage />}
           />
-          <Route path="/create" element={<CreateLocationPage />} />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoutes>
+                <CreateLocationPage />
+              </ProtectedRoutes>
+            }
+          />
           <Route path="/edit/:id" element={<EditLocationPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/userProfile/:id" element={<ProfilePage />} />
-          <Route path="/dashboard" element={<UserProfilePage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutes>
+                <UserProfilePage />
+              </ProtectedRoutes>
+            }
+          />
+          {/* <Route path="/dashboard" element={<ProtectedRoutes> <UserProfilePage /> </ProtectedRoutes>} /> */}
         </Routes>
       </BrowserRouter>
-      {/* <FreakingComponent /> */}
     </>
   );
 }

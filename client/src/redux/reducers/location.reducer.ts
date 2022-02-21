@@ -1,8 +1,8 @@
-import { AuthErrors, IUser } from "../../utils/authInterface";
-import { IComment, ILocation } from "../../utils/LocationInterface";
-import { ActionType } from "../action-types/auth.types";
+import {
+  IComment,
+  ILocation,
+} from "../../services/utils/interfaces/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
-import { AuthAction } from "../actions-interface/auth.interface";
 import { LocationAction } from "../actions-interface/location.interface";
 
 export interface LocationState {
@@ -68,9 +68,7 @@ const reducer = (
         specificComment: action.payload,
       };
     case CommentTypes.ADD_COMMENT:
-      const foundLocation = state.location.find(
-        (i) => i._id === action.payload.location_id
-      );
+      const foundLocation = state.specificLocation;
       foundLocation?.comment.push(action.payload.comment);
       return {
         ...state,
@@ -82,12 +80,6 @@ const reducer = (
     case CommentTypes.DELETE_COMMENT:
       return {
         ...state,
-        // location: [
-        //   ...state.location,
-        //   state.location.map((item) =>
-        //     item.comment.filter((item) => item._id !== action.payload)
-        //   ),
-        // ],
         specificLocation: {
           ...state.specificLocation,
           comment: state.specificLocation?.comment.filter(

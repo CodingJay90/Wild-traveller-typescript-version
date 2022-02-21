@@ -9,8 +9,11 @@ import {
   getSpecificLocationApi,
   updateCommentApi,
   updateLocationApi,
-} from "../../api/location.api";
-import { ILocation, ILocationForm } from "../../utils/LocationInterface";
+} from "../../services/api/location.api";
+import {
+  ILocation,
+  ILocationForm,
+} from "../../services/utils/interfaces/LocationInterface";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 import {
   DeleteCommentPayload,
@@ -40,7 +43,6 @@ export const getSpecificLocation =
       });
       dispatch({ type: LocationTypes.FETCH_SPECIFIC_LOCATION, payload: data });
     } catch (error) {
-      console.log(error);
       dispatch({ type: LocationTypes.THROW_ERROR, payload: error });
     }
   };
@@ -136,7 +138,6 @@ export const createComment =
         `/${id}/comment/create`,
         commentText
       );
-      console.log(data);
       const payload: ICommentPayload = {
         comment: data.comment,
         location_id: id,
@@ -163,7 +164,6 @@ export const updateComment =
         location_id: id,
         comment_id,
       };
-      console.log(data);
       dispatch({
         type: CommentTypes.UPDATE_COMMENT,
         payload: payload,
@@ -182,7 +182,6 @@ export const deleteComment =
         location_id: id,
         comment_id: commentId,
       };
-      console.log(data);
       dispatch({
         type: CommentTypes.DELETE_COMMENT,
         payload,

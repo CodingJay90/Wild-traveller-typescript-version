@@ -12,11 +12,8 @@ const isLoggedIn = (req: AuthRequest, res: Response, next: NextFunction) => {
     const verified = jwt.verify(token, config.jwt_secret) as IJwt;
     req.user = verified.user;
     next();
-    // res.status(200).json(verified)
   } catch (err: any) {
     res.status(400).json({ error: "invalid token" });
-    console.log("await");
-    console.log(err.message);
   }
 };
 

@@ -1,4 +1,12 @@
-import { AuthErrors, IUser } from "../../utils/authInterface";
+import {
+  deleteCookie,
+  getCookie,
+  setCookie,
+} from "../../services/utils/cookiesFunctions";
+import {
+  AuthErrors,
+  IUser,
+} from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 import { AuthAction } from "../actions-interface/auth.interface";
 
@@ -14,7 +22,7 @@ export interface AuthState {
 
 const initialState = {
   isAuthenticated: false,
-  token: localStorage.getItem("auth_token"),
+  token: getCookie("auth_token"),
   error: null,
   currentUser: null,
   success: null,
@@ -26,7 +34,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
   switch (action.type) {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
-      localStorage.setItem("auth_token", action.payload.token || "");
+      if (action.payload.keepSignedIn)
+        setCookie("auth_token", action.payload.token, 1);
       return {
         ...state,
         isAuthenticated: true,
@@ -43,7 +52,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         currentUser: action.payload,
       };
     case ActionType.DELETE_USER:
-      localStorage.removeItem("auth_token");
+      deleteCookie("auth_token");
       return {
         ...state,
         currentUser: null,
@@ -53,12 +62,15 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       return {
         ...state,
         currentUser: action.payload,
+        isAuthenticated: true,
+        error: null,
       };
     case ActionType.GET_SPECIFIC_USER:
       return {
         ...state,
         specificUser: action.payload,
         isLoading: false,
+        error: null,
       };
     case ActionType.USER_LOADING:
       return {
@@ -67,7 +79,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       };
     case ActionType.LOGIN_USER_FAIL:
     case ActionType.REGISTER_USER_FAIL:
-      localStorage.removeItem("auth_token");
+      deleteCookie("auth_token");
       return {
         ...state,
         isAuthenticated: null,
@@ -80,7 +92,7 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       return {
         ...state,
         isAuthenticated: null,
-        // error: action.payload,
+        error: action.payload,
       };
 
     case ActionType.CLEAR_ERROR:

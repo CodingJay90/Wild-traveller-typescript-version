@@ -18,14 +18,25 @@ const UserSchema: Schema = new Schema(
       required: [true, "Please enter your password"],
       minlength: [5, "Password shouldn't be less than six characters long"],
     },
-    gender: {
+    firstName: {
       type: String,
-      required: true,
+    },
+    lastName: {
+      type: String,
+    },
+    title: {
+      type: String,
     },
     bio: {
       type: String,
     },
     avatar: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    city: {
       type: String,
     },
   },
