@@ -80,15 +80,18 @@ const signupInputs: InputInterface[] = [
     name: "password",
   },
 ];
-// zoom
-// fade
-// flip
-// door
-// rotate
-// slideUp
-// slideDown
-// slideLeft
-// slideRight
+/*
+Transition options
+zoom
+fade
+flip
+door
+rotate
+slideUp
+slideDown
+slideLeft
+slideRight
+*/
 
 const AuthModal = ({ visible, setVisible }: IProps) => {
   const dispatch = useDispatch();
@@ -135,7 +138,6 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
     }
     start = 0;
     length = newForm.length;
-    console.log(newForm);
     let stagger = (i: number): void => {
       if (i < length) {
         setTimeout(() => {

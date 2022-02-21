@@ -46,7 +46,6 @@ const Auth = () => {
 
   useEffect(() => {
     if (error?.errorMessages.length) {
-      console.log(error, "error");
       setSpinnerLoader(isLoading);
       setShowToast(true);
     }
@@ -54,7 +53,6 @@ const Auth = () => {
       setSpinnerLoader(isLoading);
       navigate("/dashboard");
     }
-    console.log(state);
   }, [state, error]);
 
   useEffect(() => {

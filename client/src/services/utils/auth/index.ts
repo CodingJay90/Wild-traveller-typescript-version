@@ -35,6 +35,5 @@ export const checkTokenExpiration = (token: string) => {
 };
 
 export const checkLogin = (token: string) => {
-  // const token: string = getCookie("auth_token");
   return !!token && !checkTokenExpiration(token);
 };

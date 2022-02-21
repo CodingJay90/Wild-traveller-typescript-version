@@ -34,10 +34,8 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
   switch (action.type) {
     case ActionType.LOGIN_USER:
     case ActionType.REGISTER_USER:
-      console.log(action.payload);
       if (action.payload.keepSignedIn)
         setCookie("auth_token", action.payload.token, 1);
-      // if (action.payload.keepSignedIn) setCookie("keepSignedIn", "true", 1);
       return {
         ...state,
         isAuthenticated: true,
@@ -68,7 +66,6 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
         error: null,
       };
     case ActionType.GET_SPECIFIC_USER:
-      console.log(action.payload);
       return {
         ...state,
         specificUser: action.payload,
@@ -82,7 +79,6 @@ const reducer = (state: AuthState = initialState, action: AuthAction) => {
       };
     case ActionType.LOGIN_USER_FAIL:
     case ActionType.REGISTER_USER_FAIL:
-      // localStorage.removeItem("auth_token");
       deleteCookie("auth_token");
       return {
         ...state,

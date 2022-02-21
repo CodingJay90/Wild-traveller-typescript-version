@@ -57,11 +57,9 @@ const Explore = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    console.log(isLoading, "isloading");
     dispatch(getLocations());
     return () => {
       dispatch(clearError());
-      console.log(":unmounting component");
     };
   }, []);
 

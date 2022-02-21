@@ -15,7 +15,6 @@ const Pagination = ({
   paginate,
   currentPage,
 }: IProps) => {
-  // console.log(currentPage)
   const pageNumbers: number[] = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {

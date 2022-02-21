@@ -1,12 +1,8 @@
-// import { AuthErrors, IUser } from "../../utils/authInterface";
-// import { IComment, ILocation } from "../../utils/LocationInterface";
 import {
   IComment,
   ILocation,
 } from "../../services/utils/interfaces/LocationInterface";
-import { ActionType } from "../action-types/auth.types";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
-import { AuthAction } from "../actions-interface/auth.interface";
 import { LocationAction } from "../actions-interface/location.interface";
 
 export interface LocationState {

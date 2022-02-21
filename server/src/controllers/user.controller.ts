@@ -23,9 +23,9 @@ const createUser = async (req: Request, res: Response) => {
   if (!avatar)
     avatar = imagesArray[Math.floor(Math.random() * imagesArray.length)];
   const salt = await bcrypt.genSalt();
-  const hashedPassword = await bcrypt
-    .hash(password, salt)
-    .catch((err) => console.log(err));
+  const hashedPassword = await bcrypt.hash(password, salt).catch((err) => {
+    throw err;
+  });
 
   try {
     const errors = validationResult(req);
@@ -61,7 +61,6 @@ function aaa(...args: any) {
 }
 const loginUser = async (req: Request, res: Response) => {
   try {
-    console.log(aaa("jj", "jkjj"));
     const foundUser = await User.findOne({ email: req.body.email });
     if (req.body.email === "")
       return res.status(400).json({
@@ -69,7 +68,6 @@ const loginUser = async (req: Request, res: Response) => {
         errorMessages: createErrorResponse("Email field cannot be empty"),
       });
     if (!foundUser) {
-      console.log("User not found");
       return res.status(400).json({
         success: false,
         errorMessages: createErrorResponse(
@@ -92,7 +90,6 @@ const loginUser = async (req: Request, res: Response) => {
     const token = generateToken(foundUser);
     res.status(200).json({ success: true, token, user: foundUser });
   } catch (error: any) {
-    console.log(error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 };
@@ -100,7 +97,9 @@ const loginUser = async (req: Request, res: Response) => {
 const accessUser = async (req: AuthRequest, res: Response) => {
   User.findById(req.user?._id)
     .then((user) => res.json(user))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      throw err;
+    });
 };
 
 const getSpecificUser = async (req: AuthRequest, res: Response) => {
@@ -116,7 +115,6 @@ const getSpecificUser = async (req: AuthRequest, res: Response) => {
     });
   } catch (error: any) {
     res.status(400).json(error.message);
-    console.log(error);
   }
 };
 
@@ -127,7 +125,6 @@ const updateUser = async (req: AuthRequest, res: Response) => {
       req.body,
       { new: true, useFindAndModify: false }
     )) as IUser;
-    console.log(req.body);
 
     generateToken(updatedUser);
     res.status(200).json({ success: true, updatedUser });
@@ -145,7 +142,6 @@ const deleteUser = async (req: AuthRequest, res: Response) => {
       );
   } catch (error: any) {
     res.json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 

@@ -18,7 +18,6 @@ export const registerUser =
   (userDetails: IUser, keepSignedIn: boolean) =>
   async (dispatch: Dispatch<AuthAction>) => {
     try {
-      console.log(userDetails);
       dispatch({ type: ActionType.USER_LOADING });
       const { data } = await registerUserApi("users/", userDetails);
       dispatch({ type: ActionType.REGISTER_USER, payload: data });
@@ -36,13 +35,11 @@ export const loginUser =
   async (dispatch: Dispatch<AuthAction>) => {
     try {
       const { data } = await loginUserApi("sessions/", userDetails);
-      console.log(data);
       dispatch({
         type: ActionType.LOGIN_USER,
         payload: { ...data, keepSignedIn },
       });
     } catch (error: any) {
-      console.log(error.response.data);
       dispatch({
         type: ActionType.LOGIN_USER_FAIL,
         payload: error.response.data,
@@ -88,16 +85,13 @@ export const getSpecificUser =
         comments: data.comments,
         locations: data.locations,
       };
-      console.log(id);
       dispatch({ type: ActionType.GET_SPECIFIC_USER, payload: userData });
     } catch (error: any) {
-      console.log(error.response);
       dispatch({ type: ActionType.USER_LOADED_FAIL, payload: error });
     }
   };
 
 export const clearError = () => (dispatch: Dispatch) => {
-  console.log("gg");
   dispatch({
     type: ActionType.CLEAR_ERROR,
   });

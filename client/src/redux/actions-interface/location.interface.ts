@@ -1,9 +1,7 @@
-// import { IUser } from "../../utils/authInterface";
 import {
   IComment,
   ILocation,
 } from "../../services/utils/interfaces/LocationInterface";
-import { ActionType } from "../action-types/auth.types";
 import { CommentTypes, LocationTypes } from "../action-types/location.types";
 
 export interface ICommentPayload {

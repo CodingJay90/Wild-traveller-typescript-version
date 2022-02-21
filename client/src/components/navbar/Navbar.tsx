@@ -22,7 +22,6 @@ const Navbar = () => {
   const { token, currentUser } = state;
 
   const logout = () => {
-    // localStorage.removeItem("auth_token");
     deleteCookie("auth_token");
     deleteCookie("keepSignedIn");
     toast.success("Logging you out", { theme: "dark" });
@@ -57,7 +56,7 @@ const Navbar = () => {
             !menuOpen ? "navbar__group" : "navbar__group navbar__group--none"
           }
         >
-          <div className="navbar__group-item">
+          <div className="navbar__group-item links">
             <NavLink to="/login">Login / Register</NavLink>
           </div>
         </div>
@@ -69,10 +68,10 @@ const Navbar = () => {
         >
           {currentUser && (
             <>
-              <div className="navbar__group-item">
+              <div className="navbar__group-item links">
                 <NavLink to="/dashboard">{currentUser?.username}</NavLink>
               </div>
-              <div className="navbar__group-item">
+              <div className="navbar__group-item links">
                 <NavLink to="/dashboard">
                   <img
                     src={
@@ -83,7 +82,7 @@ const Navbar = () => {
                   />
                 </NavLink>
               </div>
-              <div className="navbar__group-item" onClick={logout}>
+              <div className="navbar__group-item links" onClick={logout}>
                 Log Out
               </div>
             </>

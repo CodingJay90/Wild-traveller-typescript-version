@@ -11,7 +11,6 @@ const getLocations = async (req: Request, res: Response) => {
     res.status(200).json(foundLocation);
   } catch (error: any) {
     res.status(404).json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 
@@ -31,7 +30,6 @@ const createLocation = async (req: AuthRequest, res: Response) => {
     res.status(200).json(newLocation);
   } catch (error: any) {
     res.json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 
@@ -43,7 +41,6 @@ const getSpecificLocation = async (req: Request, res: Response) => {
     res.status(200).json(foundLoaction);
   } catch (error: any) {
     res.status(404).json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 const updateLocation = async (req: Request, res: Response) => {
@@ -55,7 +52,6 @@ const updateLocation = async (req: Request, res: Response) => {
     res.status(200).json({ success: true, updatedLocation });
   } catch (error: any) {
     res.json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 
@@ -68,7 +64,6 @@ const deleteLocation = async (req: Request, res: Response) => {
       );
   } catch (error: any) {
     res.json({ success: false, message: error.message });
-    console.log(error);
   }
 };
 

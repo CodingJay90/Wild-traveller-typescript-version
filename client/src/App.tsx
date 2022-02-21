@@ -20,7 +20,6 @@ import FreakingComponent from "./FreakingComponent";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import AuthModal from "./components/Extras/modals/authModal/AuthModal";
 import { deleteCookie, getCookie } from "./services/utils/cookiesFunctions";
-import Test from "./Test";
 import { checkLogin, checkTokenExpiration } from "./services/utils/auth";
 import { Store } from "./redux/reducers";
 
@@ -29,15 +28,7 @@ function App() {
   const dispatch = useDispatch();
   const authToken = getCookie("auth_token");
   useEffect(() => {
-    console.log(checkTokenExpiration(authToken));
-    // console.log(checkLogin(), "checklogin");
     if (checkLogin(token || "")) dispatch(loadUser());
-    // dispatch(getLocations());
-
-    // console.log(getCookie("keepSignedIn"));
-    // if (getCookie("keepSignedIn") === "true") return;
-    // deleteCookie("keepSignedIn");
-    // if (authToken) dispatch(loadUser());
   }, [dispatch]);
 
   return (

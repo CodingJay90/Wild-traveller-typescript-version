@@ -27,7 +27,7 @@ const LocationItem: FC<LocationProps> = ({
             <Link to={`/details/${_id}/${location}`}>View more</Link>
           </p>
           <div className="user">
-            <Link
+            {/* <Link
               to={{
                 pathname: `/userProfile/${author.id}`,
               }}
@@ -36,7 +36,7 @@ const LocationItem: FC<LocationProps> = ({
                 src="https://studyinbaltics.ee/wp-content/uploads/2020/03/3799Ffxy.jpg"
                 alt="user"
               />
-            </Link>
+            </Link> */}
             <div className="user-info">
               <Link
                 to={{

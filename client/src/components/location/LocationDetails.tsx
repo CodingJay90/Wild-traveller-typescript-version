@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import "./LocationDetails.scss";
-// import CreateCommentForm from "../forms/commentForm/CreateCommentForm";
 import { Store } from "../../redux/reducers";
 import { LocationProps } from "./LocationItem";
 import {
@@ -50,9 +49,6 @@ const LocationDetails = () => {
 
   useEffect(() => {
     dispatch(getSpecificLocation(params.id || ""));
-    if (currentUser?._id == currentLocation?.author.id) {
-      console.log("show the bitch");
-    }
   }, [dispatch, params.id]);
 
   function toggleCommentOptions(i: any) {
@@ -122,7 +118,6 @@ const LocationDetails = () => {
           />
           {!isLoading && currentLocation?.comment ? (
             currentLocation?.comment.map((data, index) => {
-              console.log(data);
               return (
                 <li key={data._id} className="timeline-item | extra-space">
                   <span className="timeline-item-icon | filled-icon">

@@ -197,8 +197,5 @@
     @include desktopBreakpoint() {
       height: 50vh !important;
     }
-    // @include desktopBreakpoint-up-sm() {
-    //   height: 50vh !important;
-    // }
   }
 }

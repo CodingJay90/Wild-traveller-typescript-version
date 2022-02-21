@@ -17,7 +17,6 @@ interface IProps {
 }
 
 const CreateCommentForm: FC<IProps> = ({
-  //   item: { _id },
   populateForm,
   comment_id,
   location_id,
@@ -44,13 +43,10 @@ const CreateCommentForm: FC<IProps> = ({
   };
 
   useEffect(() => {
-    // if (comment_id) dispatch(getSpecificComment(location_id, comment_id));
-    // if (populateForm) setUpdateText(specificComment.text);
     if (populateForm) setText(commentUpdateText);
   }, [populateForm, location_id, comment_id]);
 
   return (
-    // <div className="comment-input">
     <li className="timeline-item">
       <span className="timeline-item-icon | avatar-icon">
         <i className="avatar">
@@ -65,24 +61,9 @@ const CreateCommentForm: FC<IProps> = ({
             value={text}
             placeholder="Add comment"
           />
-          {/* <button disabled={!text} className="btn btn-warning">
-            {populateForm ? "Update Comment" : "Enter"}
-          </button> */}
         </form>
       </div>
     </li>
-    // <form onSubmit={onSubmit}>
-    //   <input
-    //     type="text"
-    //     onChange={(e) => setText(e.target.value)}
-    //     value={text}
-    //     placeholder="Add comment"
-    //   />
-    // <button disabled={!text} className="btn btn-warning">
-    //   {populateForm ? "Update Comment" : "Enter"}
-    // </button>
-    // </form>
-    // </div>
   );
 };
 

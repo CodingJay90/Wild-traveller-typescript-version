@@ -41,7 +41,6 @@ const Dashboard = () => {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(updateUser(values));
-    console.log(values);
   }
 
   useEffect(() => {
@@ -55,8 +54,6 @@ const Dashboard = () => {
     dispatch(deleteUser());
     navigate("/explore");
   };
-
-  console.log(currentUser);
 
   return (
     <React.Fragment>

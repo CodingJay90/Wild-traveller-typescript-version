@@ -1,6 +1,5 @@
 @import "../../styles/partials/mixins";
 .navbar {
-  // background-color: crimson;
   display: block;
   position: static;
   font-size: 1.2rem;
@@ -31,6 +30,9 @@
 
   &__group {
     display: block;
+    &:nth-of-type(2) {
+      width: 20%;
+    }
     @include tabletBreakpoint {
       display: flex;
       justify-content: space-between;
@@ -51,11 +53,40 @@
       padding: 1rem;
       transition: 0.1s linear;
       font-weight: 300;
-
-      &:hover {
-        background-color: rgba(48, 49, 49, 0.233);
-        cursor: pointer;
+      position: relative;
+      &.links {
+        &:before,
+        &:after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          opacity: 0;
+          z-index: -1;
+        }
+        &:before {
+          top: 0;
+          left: 0;
+          border-top: 2px solid #000;
+          border-right: 2px solid #000;
+        }
+        &:after {
+          bottom: 0;
+          right: 0;
+          border-bottom: 2px solid #000;
+          border-left: 2px solid #000;
+        }
+        &:hover {
+          &:before {
+            animation: first 0.3s forwards;
+            opacity: 1;
+          }
+          &:after {
+            animation: second 0.3s forwards;
+          }
+        }
       }
+
       @include tabletBreakpoint {
         border-bottom: none;
       }
@@ -145,10 +176,6 @@
   border: none;
   display: flex;
   justify-content: space-between;
-  // &:hover {
-  //   background-color: #fff;
-  //   cursor: default;
-  // }
   @include laptopBreakpoint {
     color: #111;
     font-size: 1.5em;
@@ -158,37 +185,6 @@
 }
 
 @media screen and (max-width: 880px) {
-  // .d-none {
-  //   position: absolute;
-  //   transform: translateY(100%);
-  //   display: none;
-  //   opacity: 0;
-  //   pointer-events: none;
-  // }
-  // .Navbar nav {
-  //   display: block;
-  //   position: static;
-  //   z-index: 1;
-  // }
-  // .Navbar .nav-group {
-  //   display: block;
-  // }
-  // .Navbar .nav-item {
-  //   text-align: left;
-  //   width: 100%;
-  //   padding-left: 10px;
-  //   border-bottom: 1px solid rgba(0, 255, 221, 0.205);
-  // }
-  .Navbar .nav-item:hover {
-    background-color: rgba(0, 255, 255, 0.233);
-    color: rgb(153, 139, 139);
-  }
-  // .Navbar .brand {
-  //   /* text-align: center; */
-  //   border: none;
-  //   display: flex;
-  //   justify-content: space-between;
-  // }
   .Navbar .brand:hover {
     background: none;
   }
@@ -198,7 +194,44 @@
   .icon {
     color: black;
   }
-  // .menu-icon {
-  //   display: block;
-  // }
+}
+
+@keyframes first {
+  0% {
+    width: 0%;
+    height: 0%;
+  }
+  25% {
+    width: 100%;
+    height: 0%;
+  }
+  50% {
+    width: 100%;
+    height: 100%;
+  }
+  100% {
+    width: 100%;
+    height: 95%;
+  }
+}
+
+@keyframes second {
+  0% {
+    width: 0%;
+    height: 0%;
+  }
+  50% {
+    width: 0%;
+    height: 0%;
+  }
+  75% {
+    width: 100%;
+    height: 0%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    height: 95%;
+    opacity: 1;
+  }
 }

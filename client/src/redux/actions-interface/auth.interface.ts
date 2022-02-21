@@ -1,4 +1,3 @@
-// import { IUser } from "../../utils/authInterface";
 import { IUser } from "../../services/utils/interfaces/authInterface";
 import { ActionType } from "../action-types/auth.types";
 
