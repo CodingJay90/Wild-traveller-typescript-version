@@ -43,8 +43,10 @@ const ToastAlert = ({
         <div className="notification__text-container">
           <h4 className="dc-text notification__header">{heading}</h4>
           {typeof msg === "object" ? (
-            msg.map((i: any) => (
-              <li className="notification__text-body">{i}</li>
+            msg.map((i: any, index: number) => (
+              <li className="notification__text-body" key={index}>
+                {i}
+              </li>
             ))
           ) : (
             <p className="notification__text-body">{msg}</p>
