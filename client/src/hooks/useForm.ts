@@ -11,6 +11,7 @@ export const useForm = (callback: () => void, initialState: any) => {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    console.log("submitting form");
     callback();
   };
 

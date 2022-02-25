@@ -63,6 +63,17 @@ const Explore = () => {
     };
   }, []);
 
+  console.log(isLoading);
+
+  if (isLoading)
+    return (
+      <LoadingSpinner
+        color={"#fff"}
+        loading={true}
+        loadingText="Loading. Please wait...."
+      />
+    );
+
   return (
     <>
       <main className="explore">
@@ -96,12 +107,14 @@ const Explore = () => {
               <h1>Locations</h1>
             </header>
           </div>
+          {/* {isLoading ? alert("Loading") : alert("not Loading")} */}
           {isLoading ? (
-            <LoadingSpinner
-              color={"#fff"}
-              loading={true}
-              loadingText="Loading. Please wait...."
-            />
+            // <LoadingSpinner
+            //   color={"#fff"}
+            //   loading={true}
+            //   loadingText="Loading. Please wait...."
+            // />
+            <h1>loading...</h1>
           ) : (
             <div className="grid">
               <div className="grid-container">

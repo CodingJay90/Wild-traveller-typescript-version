@@ -20,7 +20,10 @@ export const registerUser =
     try {
       dispatch({ type: ActionType.USER_LOADING });
       const { data } = await registerUserApi("users/", userDetails);
-      dispatch({ type: ActionType.REGISTER_USER, payload: data });
+      dispatch({
+        type: ActionType.REGISTER_USER,
+        payload: { ...data, keepSignedIn },
+      });
     } catch (error: any) {
       dispatch({ type: ActionType.USER_LOADING });
       dispatch({
