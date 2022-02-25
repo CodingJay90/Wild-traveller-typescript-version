@@ -50,8 +50,10 @@ const Auth = () => {
       setShowToast(true);
     }
     if (isAuthenticated) {
+      dispatch(clearError());
       setSpinnerLoader(isLoading);
       navigate("/dashboard");
+      window.location.reload();
     }
   }, [state, error]);
 
@@ -105,7 +107,7 @@ const Auth = () => {
                 checked={keepSignedIn}
                 onChange={() => setKeepSignedIn(!keepSignedIn)}
               />
-              <label htmlFor="remember">Keep me sign in</label>
+              <label htmlFor="remember">Keep me signed in</label>
               <button className="btn-signin">Sign In</button>
 
               {/* <a href="#" className="btn-reset btn-fade">
@@ -128,7 +130,7 @@ const Auth = () => {
               <span>Sign Up</span>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
               <input
                 name="username"
                 onChange={onChange}

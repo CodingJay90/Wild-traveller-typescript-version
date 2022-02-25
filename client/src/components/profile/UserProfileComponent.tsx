@@ -24,6 +24,9 @@ const UserProfile = () => {
   if (error) {
     return <NoContent />;
   }
+
+  if (!user?._id)
+    return <NoContent heading="Ooops!" content="User not found" />;
   return (
     <React.Fragment>
       {isLoading || !user ? (

@@ -1,5 +1,13 @@
+import { FC } from "react";
 import "./NoContent.css";
-const NoContent = () => {
+interface NoContent {
+  heading?: string;
+  content?: string;
+}
+const NoContent: FC<NoContent> = ({
+  heading = "Sorry, there doesn't seem to be anything here.",
+  content = "Make sure the page-id is correct and try again",
+}) => {
   return (
     <div>
       <div className="subredditvars-r-whitepeopletwitter">
@@ -33,9 +41,9 @@ const NoContent = () => {
                 ></path>
               </svg>
               <p className="_2Nj40mHW74FkFefq6oqWkb">
-                Sorry, there doesn't seem to be anything here.
+                {heading}
                 <br />
-                <small>Make sure the page-id is correct and try again</small>
+                <small>{content}</small>
               </p>
               <button
                 role="button"
