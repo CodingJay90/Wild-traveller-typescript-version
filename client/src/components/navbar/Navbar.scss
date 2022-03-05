@@ -55,6 +55,7 @@
       font-weight: 300;
       position: relative;
       &.links {
+        cursor: pointer;
         &:before,
         &:after {
           content: "";
