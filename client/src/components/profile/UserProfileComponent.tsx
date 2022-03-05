@@ -4,7 +4,10 @@ import "./UserProfile.scss";
 import Footer from "../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
-import { getSpecificUser } from "../../redux/action-creators/auth.action";
+import {
+  clearError,
+  getSpecificUser,
+} from "../../redux/action-creators/auth.action";
 import { useParams } from "react-router-dom";
 import { Store } from "../../redux/reducers";
 import { IUser } from "../../services/utils/interfaces/authInterface";
@@ -20,12 +23,18 @@ const UserProfile = () => {
   useEffect(() => {
     dispatch(getSpecificUser(params.id || ""));
   }, [dispatch]);
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+      console.log("unmounting");
+    };
+  }, []);
 
   if (error) {
     return <NoContent />;
   }
 
-  if (!user?._id)
+  if (!isLoading && !user?._id)
     return <NoContent heading="Ooops!" content="User not found" />;
   return (
     <React.Fragment>

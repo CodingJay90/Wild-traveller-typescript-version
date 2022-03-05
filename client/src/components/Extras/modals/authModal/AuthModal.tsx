@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import Rodal from "rodal";
 import "./AuthModal.scss";
@@ -96,7 +102,9 @@ slideRight
 const AuthModal = ({ visible, setVisible }: IProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error, isAuthenticated } = useSelector((state: Store) => state.auth);
+  const { error, isAuthenticated, success } = useSelector(
+    (state: Store) => state.auth
+  );
   const { values, onChange, onSubmit } = useForm(submitForm, {
     email: "",
     username: "",
@@ -112,11 +120,12 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
     useState<InputInterface[]>(loginInputs);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (success) {
       navigate("/explore");
       setVisible(false);
+      dispatch(clearError());
     }
-  }, [isAuthenticated]);
+  }, [success]);
 
   function inUpClick(): void {
     setIsSignup(!isSignUp);
@@ -159,6 +168,7 @@ const AuthModal = ({ visible, setVisible }: IProps) => {
 
   function submitForm() {
     handleSubmit();
+    // redirect();
   }
 
   return (
@@ -201,8 +211,8 @@ const Error = ({ errors }: EProps) => {
       {errors ? (
         <div className="error__alert">
           <ul>
-            {errors?.map((i: string) => (
-              <li>{i}</li>
+            {errors?.map((i: string, index: number) => (
+              <li key={index}>{i}</li>
             ))}
           </ul>
         </div>

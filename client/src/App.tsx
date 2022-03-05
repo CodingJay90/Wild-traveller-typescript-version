@@ -14,14 +14,12 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import UserProfilePage from "./pages/Dashboard";
 import { getSpecificUser, loadUser } from "./redux/action-creators/auth.action";
-import { getLocations } from "./redux/action-creators/location.action";
-import { AuthState } from "./redux/reducers/auth.reducer";
-import FreakingComponent from "./FreakingComponent";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import AuthModal from "./components/Extras/modals/authModal/AuthModal";
 import { deleteCookie, getCookie } from "./services/utils/cookiesFunctions";
 import { checkLogin, checkTokenExpiration } from "./services/utils/auth";
 import { Store } from "./redux/reducers";
+import Notfound from "./components/404/Notfound";
 
 function App() {
   const { token } = useSelector((state: Store) => state.auth);
@@ -36,6 +34,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route path="*" element={<Notfound />} />
           <Route path="/" element={<Homepage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route
@@ -63,7 +62,6 @@ function App() {
               </ProtectedRoutes>
             }
           />
-          {/* <Route path="/dashboard" element={<ProtectedRoutes> <UserProfilePage /> </ProtectedRoutes>} /> */}
         </Routes>
       </BrowserRouter>
     </>

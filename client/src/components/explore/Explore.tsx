@@ -63,8 +63,6 @@ const Explore = () => {
     };
   }, []);
 
-  console.log(isLoading);
-
   if (isLoading)
     return (
       <LoadingSpinner
